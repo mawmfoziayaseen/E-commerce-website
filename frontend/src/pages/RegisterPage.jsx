@@ -38,7 +38,7 @@ export default function RegisterPage() {
           </div>
           <div className="grid gap-2">
             <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password" />
+            <Input id="password"  placeholder="******" type="password" />
           </div>
           <Button type="submit" className="w-full">
             Create an account
