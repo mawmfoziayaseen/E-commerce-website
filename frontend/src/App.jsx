@@ -1,11 +1,17 @@
-
+import { BrowserRouter ,Routes ,Route} from 'react-router-dom'
+import RegisterPage from './pages/RegisterPage'
 
 function App() {
  
 
   return (
     <>
-      <h1>ShopWave Frontend</h1>
+   <BrowserRouter>
+   <Routes>
+    <Route path="/register" element={<RegisterPage/>} />
+   </Routes>
+   
+   </BrowserRouter>
     </>
   )
 }
