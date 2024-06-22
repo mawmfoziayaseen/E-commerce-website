@@ -13,7 +13,8 @@ import { Label } from "@/components/ui/label"
 
 export default function RegisterPage() {
   return (
-    <Card className="mx-auto max-w-sm">
+   <div className ="h-screen flex justify-center items-center  ">
+     <Card className="w-full max-w-sm ">
       <CardHeader>
         <CardTitle className="text-xl">Sign Up</CardTitle>
         <CardDescription>
@@ -22,15 +23,9 @@ export default function RegisterPage() {
       </CardHeader>
       <CardContent>
         <div className="grid gap-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="first-name">First name</Label>
-              <Input id="first-name" placeholder="Max" required />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="last-name">Last name</Label>
-              <Input id="last-name" placeholder="Robinson" required />
-            </div>
+          <div className="grid gap-2">
+            <Label htmlFor="full-name">Full Name</Label>
+            <Input id="full-name" placeholder="Full Name" required />
           </div>
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
@@ -48,11 +43,9 @@ export default function RegisterPage() {
           <Button type="submit" className="w-full">
             Create an account
           </Button>
-          <Button variant="outline" className="w-full">
-            Sign up with GitHub
-          </Button>
+
         </div>
-        <div className="mt-4 text-center text-sm">
+        <div className="mt-4 text-sm text-center">
           Already have an account?{" "}
           <Link href="#" className="underline">
             Sign in
@@ -60,5 +53,6 @@ export default function RegisterPage() {
         </div>
       </CardContent>
     </Card>
+   </div>
   )
 }
