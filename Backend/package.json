@@ -1,0 +1,25 @@
+{
+  "name": "shopware",
+  "version": "1.0.0",
+  "description": "This is my E commerce website",
+  "main": "sever.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "author": "Fozia Shabbir",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.4.3",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "color": "^4.2.3",
+    "colors": "^1.4.0",
+    "nodemon": "^3.1.3"
+  }
+}
