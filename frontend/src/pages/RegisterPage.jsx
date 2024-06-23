@@ -21,16 +21,16 @@ export default function RegisterPage() {
     setInputValues(values => ({ ...values, [name]: value }));
   };
 
-  const handleSubmit = (e) => { 
+  const handleSubmit = (e) => {
     e.preventDefault();
     axios.post('http://localhost:8080/api/v1/users/register', inputValues, {
-        headers: { "Content-Type": "application/json" },
-      })
+      headers: { "Content-Type": "application/json" },
+    })
       .then((response) => {
-        console.log(response);
+        console.log(response.data);
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
       });
   };
 
@@ -92,4 +92,4 @@ export default function RegisterPage() {
       </Card>
     </div>
   );
-}
+};
