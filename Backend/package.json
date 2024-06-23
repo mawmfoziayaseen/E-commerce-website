@@ -2,7 +2,7 @@
   "name": "shopware",
   "version": "1.0.0",
   "description": "This is my E commerce website",
-  "main": "sever.js",
+  "main": "server.js",
   "type": "module",
   "scripts": {
     "start": "node server.js",
@@ -16,7 +16,8 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mongoose": "^8.4.3",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "react-router-dom": "^6.23.1"
   },
   "devDependencies": {
     "color": "^4.2.3",
