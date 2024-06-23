@@ -12,6 +12,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 export default function RegisterPage() {
+  const handlerSubmit = (e)=>{
+    e.preventDefault();
+    console.log("submit")
+  }
   return (
    <div className ="h-screen flex justify-center items-center  ">
      <Card className="w-full max-w-sm ">
@@ -22,7 +26,10 @@ export default function RegisterPage() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid gap-4">
+
+      <form onSubmit={handlerSubmit }>
+
+      <div className="grid gap-4">
           <div className="grid gap-2">
             <Label htmlFor="full-name">Full Name</Label>
             <Input id="full-name" placeholder="Full Name" required />
@@ -45,6 +52,7 @@ export default function RegisterPage() {
           </Button>
 
         </div>
+      </form>
         <div className="mt-4 text-sm text-center">
           Already have an account?{" "}
           <Link href="#" className="underline">
