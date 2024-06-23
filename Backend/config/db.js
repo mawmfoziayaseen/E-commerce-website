@@ -7,8 +7,8 @@ import colors from 'colors';
 const connectDB = async () => {
     try {
 
-        const con = await mongoose.connect(`${process.env.MONGO_URL}`);
-        console.log(`connected to mongoosedb ${con.Connection.host}`.bgBlue);
+        const conn = await mongoose.connect(`${process.env.MONGO_URL}`);
+        console.log(`connected to mongoosedb ${conn.connection.host}`.bgRed);
 
     } catch (error) {
         console.log(`mongoose connection error - ${error}`);
