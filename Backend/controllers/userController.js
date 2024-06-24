@@ -1,5 +1,6 @@
 import { encryptPassword, matchPassword } from '../helper/userHelper.js';
 import userModel from '../models/userModel.js';
+import jwt from 'jsonwebtoken';
 
 const registerController = async (req, res) => {
     try {
@@ -57,13 +58,19 @@ const loginController = async (req, res) => {
         if (!isMatch) {
             return res.status(400).send({ success: false, message: "Email or password is incorrect" });
         }
+        // Generating token
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET,
+            { expiresIn: process.env.JWT_EXP }
+        );
+
         // remove password field to send user data from backend to frontend
         user.password = undefined;
         // return success response
-        return res.status(200).send({
+        return res.cookie("token",token,{ httpOnly : true, secure : true})
+        .status(200).send({
             success: true,
             message: "Login successfully",
-            user
+            user,token
         });
     } catch (error) {
         console.log(`Login Controller error  ${error}`);

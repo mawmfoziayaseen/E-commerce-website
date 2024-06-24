@@ -4,6 +4,7 @@ import connectDB from './config/db.js';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 // app.use(cors({ origin: "http://localhost:5173/", credentials: true }));
 app.use(cors(corsOptions)); 
+app.use(cookieParser());
 
 // importing routes
 import userRoutes from './routes/userRoutes.js';

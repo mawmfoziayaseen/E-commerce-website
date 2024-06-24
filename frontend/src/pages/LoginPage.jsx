@@ -27,6 +27,7 @@ export function LoginPage() {
         e.preventDefault();
         console.log(inputValues);
         axios.post('http://localhost:8080/api/v1/users/login', inputValues, {
+            // withCredentials:true ,   //axios send automatically cookies when we apply this property
             headers: { "Content-Type": "application/json" },
         })
             .then((response) => {
