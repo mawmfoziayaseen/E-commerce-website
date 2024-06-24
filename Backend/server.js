@@ -14,8 +14,9 @@ connectDB();
 const app = express();
 const corsOptions = {
     origin: 'http://localhost:5173', // Allow requests from this origin
-    methods: ['GET', 'POST'], // Allow only these HTTP methods
-    allowedHeaders: ['Content-Type', 'Credentials'], // Allow only these headers
+    methods: ['GET', 'POST','PUT','DELETE','OPTIONS'], // Allow only these HTTP methods
+    credentials: true // Allow credentials
+    // allowedHeaders: ['Content-Type', 'Credentials'], // Allow only these headers
   };
   
 
