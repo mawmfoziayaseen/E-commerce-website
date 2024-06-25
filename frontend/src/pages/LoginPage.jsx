@@ -16,7 +16,7 @@ import { useDispatch } from 'react-redux';
 import { login } from "../store/features/auth/authSlice.js";
 
 
-export function LoginPage() {
+export default function LoginPage() {
     const [inputValues, setInputValues] = useState({});
     const dispatch = useDispatch();
 
