@@ -9,13 +9,17 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import axios from "axios"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { toast } from "react-toastify"
+import { useDispatch } from 'react-redux';
+import { login } from "../store/features/auth/authSlice.js";
+
 
 export function LoginPage() {
     const [inputValues, setInputValues] = useState({});
+    const dispatch = useDispatch();
+
 
     const handleChange = (e) => {
         const name = e.target.name;
@@ -25,27 +29,21 @@ export function LoginPage() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(inputValues);
-        axios.post(`${import.meta.env.VITE_BASE_URL}/users/login`, inputValues, {
-            withCredentials:true ,   //axios send automatically cookies when we apply this property
-            headers: { "Content-Type": "application/json" },
-        })
+        dispatch(login(inputValues))
+            .unwrap()
             .then((response) => {
-                console.log(response.data);
-                toast.success(response?.data?.message, { autoClose: 2000 });
-
-                setInputValues({});
+                console.log(response);
             })
             .catch((error) => {
                 console.log(error);
-                toast.error(error.response?.data?.message, { autoClose: 2000 });
-                setInputValues({});
-            });
+            })
+
+
     };
     return (
         <div className="h-screen flex justify-center items-center">
-          
-                <Card className="w-full max-w-sm">
+
+            <Card className="w-full max-w-sm">
                 <form onSubmit={handleSubmit}>
                     <CardHeader>
                         <CardTitle className="text-2xl">Login</CardTitle>
@@ -81,15 +79,15 @@ export function LoginPage() {
                         <Button className="w-full">Sign in</Button>
 
                     </CardFooter>
-            </form>
-            <div className="mb-4 text-sm text-center">
-                Already have an account?{" "}
-                <Link to="/register" className="underline">
-                    Sign Up
-                </Link>
-            </div>
-        </Card>
-          
+                </form>
+                <div className="mb-4 text-sm text-center">
+                    Already have an account?{" "}
+                    <Link to="/register" className="underline">
+                        Sign Up
+                    </Link>
+                </div>
+            </Card>
+
         </div >
     )
 }
