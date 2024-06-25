@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import {
   Bell,
   CircleUser,
@@ -12,15 +12,9 @@ import {
   Users,
 } from "lucide-react"
 
-import { Badge } from "@/components/ui/badge"
+
 import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -90,7 +84,7 @@ export default function DashboardLayout() {
               </Link>
             </nav>
           </div>
-        
+
         </div>
       </div>
       {/* Mobile Menu */}
@@ -156,7 +150,7 @@ export default function DashboardLayout() {
                 </Link>
               </nav>
               <div className="mt-auto">
-                <Card>
+                {/* <Card>
                   <CardHeader>
                     <CardTitle>Upgrade to Pro</CardTitle>
                     <CardDescription>
@@ -169,7 +163,7 @@ export default function DashboardLayout() {
                       Upgrade
                     </Button>
                   </CardContent>
-                </Card>
+                </Card> */}
               </div>
             </SheetContent>
           </Sheet>
@@ -204,8 +198,8 @@ export default function DashboardLayout() {
         </header>
         {/* Right Side Layout */}
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-          <h1>Main</h1>
-     
+          <Outlet />
+
         </main>
       </div>
     </div>
