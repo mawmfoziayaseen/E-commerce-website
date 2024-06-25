@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import {
   Bell,
   CircleUser,
@@ -26,8 +26,10 @@ import {
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function DashboardLayout() {
+  const navigate = useNavigate();
   const handleLogout = () => {
     //logout logic here
     axios
@@ -37,11 +39,14 @@ export default function DashboardLayout() {
       })
       .then((response) => {
         window.localStorage.removeItem("user");  // to remove data from local storage
-        console.log(response);
+        toast.success(response?.data?.message, { autoClose: 2000 });
+        setTimeout(() => {
+          navigate("/login");
+        }, 2000);
 
       })
       .catch((error) => {
-        console.log(error);
+        toast.success(error?.response?.data?.message);
 
       });
 
@@ -64,14 +69,14 @@ export default function DashboardLayout() {
           <div className="flex-1">
             <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
               <Link
-                 to ="/admin"
+                to="/admin"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
                 <Home className="h-4 w-4" />
                 Dashboard
               </Link>
               <Link
-                to ="/admin/orders"
+                to="/admin/orders"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
                 <ShoppingCart className="h-4 w-4" />
@@ -79,14 +84,14 @@ export default function DashboardLayout() {
 
               </Link>
               <Link
-                to ="/admin/products"
+                to="/admin/products"
                 className="flex items-center gap-3 rounded-lg  px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
                 <Package className="h-4 w-4" />
                 Products{" "}
               </Link>
               <Link
-                to ="/admin/users"
+                to="/admin/users"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
                 <Users className="h-4 w-4" />
@@ -122,28 +127,28 @@ export default function DashboardLayout() {
                   <span className="sr-only">ShopWave</span>
                 </Link>
                 <Link
-                 to ="/admin"
+                  to="/admin"
                   className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
                 >
                   <Home className="h-5 w-5" />
                   Dashboard
                 </Link>
                 <Link
-                   to ="/admin/orders"
+                  to="/admin/orders"
                   className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
                 >
                   <ShoppingCart className="h-5 w-5" />
-                  
+
                 </Link>
                 <Link
-                   to ="/admin/products"
+                  to="/admin/products"
                   className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
                 >
                   <Package className="h-5 w-5" />
                   Products
                 </Link>
                 <Link
-                   to ="/admin/users"
+                  to="/admin/users"
                   className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
                 >
                   <Users className="h-5 w-5" />
