@@ -66,12 +66,12 @@ const loginController = async (req, res) => {
         // remove password field to send user data from backend to frontend
         user.password = undefined;
         // return success response
-        return res.cookie("token",token,{ httpOnly : true, secure : true})
-        .status(200).send({
-            success: true,
-            message: "Login successfully",
-            user,token
-        });
+        return res.cookie("token", token, { httpOnly: true, secure: true })
+            .status(200).send({
+                success: true,
+                message: "Login successfully",
+                user, token
+            });
     } catch (error) {
         console.log(`Login Controller error  ${error}`);
         return res.status(400).send({
@@ -80,5 +80,13 @@ const loginController = async (req, res) => {
         });
     }
 };
+const logoutController = async (req, res) => {
+    // return success response
+    return res.cookie("token", "", { httpOnly: true, secure: true })
+        .status(200).send({
+            success: true,
+            message: "Logout successfully"
+        });
 
-export { registerController, loginController };
+};
+export { registerController, loginController, logoutController };
