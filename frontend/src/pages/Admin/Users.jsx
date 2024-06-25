@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button"
 
 
-function Dashboard() {
+function Users() {
     return (
         <>
             <div className="flex items-center">
-                <h1 className="text-lg font-semibold md:text-2xl">Dashboard</h1>
+                <h1 className="text-lg font-semibold md:text-2xl">Users</h1>
             </div>
             <div
                 className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm" x-chunk="dashboard-02-chunk-1"
@@ -17,11 +17,11 @@ function Dashboard() {
                     <p className="text-sm text-muted-foreground">
                         You can start selling as soon as you add a product.
                     </p>
-                    <Button className="mt-4">Dashboard</Button>
+                    <Button className="mt-4">Users</Button>
                 </div>
             </div>
         </>
     )
 }
 
-export default Dashboard;
+export default Users;
