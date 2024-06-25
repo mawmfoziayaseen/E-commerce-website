@@ -33,6 +33,13 @@ export function LoginPage() {
             .unwrap()
             .then((response) => {
                 console.log(response);
+                if (response?.success == true) {
+                    toast.success(response?.message, { autoClose: 2000 });
+                }else{
+                    toast.error(response?.message, { autoClose: 2000 });
+
+                }
+                
             })
             .catch((error) => {
                 console.log(error);

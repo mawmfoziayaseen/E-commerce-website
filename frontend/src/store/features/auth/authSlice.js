@@ -13,8 +13,11 @@ export const login = createAsyncThunk("auth/logic", async (inputValues, thunkAPI
 
 
 });
+const getUserDataFromLocalStroge = window.localStorage.getItem("user") ?
+    JSON.parse(window.localStorage.getItem("user")) : null;
+
 const initialState = {
-    user: null,
+    user: getUserDataFromLocalStroge,
     status: "idle",
     error: null
 }
@@ -30,16 +33,16 @@ export const outhSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(login.pending, (state) => {
             state.status = "loading";
-            })
+        })
             .addCase(login.fulfilled, (state, action) => {
                 state.status = "succeeded";
                 state.user = action.payload;
-                })
-                .addCase(login.rejected, (state, action) => {
-                    state.status = "failed";
-                    state.error = action.error.message;
-                    });
-                },
+            })
+            .addCase(login.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.error.message;
+            });
+    },
 
 });
 
