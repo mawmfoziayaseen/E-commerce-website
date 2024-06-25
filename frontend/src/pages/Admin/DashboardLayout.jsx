@@ -25,8 +25,27 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import axios from "axios";
 
 export default function DashboardLayout() {
+  const handleLogout = () => {
+    //logout logic here
+    axios
+      .get(`${import.meta.env.VITE_BASE_URL}/users/logout`, {
+        withCredentials: true,   //axios send automatically cookies when we apply this property
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((response) => {
+        window.localStorage.removeItem("user");  // to remove data from local storage
+        console.log(response);
+
+      })
+      .catch((error) => {
+        console.log(error);
+
+      });
+
+  }
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       {/* Desktop Menu */}
@@ -57,7 +76,7 @@ export default function DashboardLayout() {
               >
                 <ShoppingCart className="h-4 w-4" />
                 Orders
-               
+
               </Link>
               <Link
                 to ="/admin/products"
@@ -73,7 +92,7 @@ export default function DashboardLayout() {
                 <Users className="h-4 w-4" />
                 Users
               </Link>
-             
+
             </nav>
           </div>
 
@@ -114,10 +133,7 @@ export default function DashboardLayout() {
                   className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
                 >
                   <ShoppingCart className="h-5 w-5" />
-                  Orders
-                  {/* <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                    6
-                  </Badge> */}
+                  
                 </Link>
                 <Link
                    to ="/admin/products"
@@ -135,7 +151,7 @@ export default function DashboardLayout() {
                 </Link>
               </nav>
               <div className="mt-auto">
-             
+
               </div>
             </SheetContent>
           </Sheet>
@@ -164,7 +180,7 @@ export default function DashboardLayout() {
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <button className="px-3 py-2" onClick={handleLogout}>Logout</button>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>

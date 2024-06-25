@@ -82,7 +82,7 @@ const loginController = async (req, res) => {
 };
 const logoutController = async (req, res) => {
     // return success response
-    return res.cookie("token", "", { httpOnly: true, secure: true })
+    return res.cookie("token", "", { httpOnly: true, secure: true ,expires:new Date(0)})   // to remove cookies from browser
         .status(200).send({
             success: true,
             message: "Logout successfully"
