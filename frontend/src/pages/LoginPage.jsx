@@ -26,8 +26,8 @@ export function LoginPage() {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(inputValues);
-        axios.post('http://localhost:8080/api/v1/users/login', inputValues, {
-            // withCredentials:true ,   //axios send automatically cookies when we apply this property
+        axios.post(`${import.meta.env.VITE_BASE_URL}/users/login`, inputValues, {
+            withCredentials:true ,   //axios send automatically cookies when we apply this property
             headers: { "Content-Type": "application/json" },
         })
             .then((response) => {
