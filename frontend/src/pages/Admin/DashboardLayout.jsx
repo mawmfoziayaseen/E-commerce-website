@@ -27,9 +27,30 @@ import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 export default function DashboardLayout() {
   const navigate = useNavigate();
+ const[message,setMessage]= useState(null);
+  const user = useSelector((state) => state.auth.user?.user);
+  console.log(user)
+
+
+  useEffect(() => {
+    if (!user) {
+      setMessage("You are not login Redirected to you login page");
+      setTimeout(() => {
+        navigate("/login");
+      }, 3000)
+    }
+    else if (user.role !== 1) {
+      setMessage("You are not Authorize this Resource Redirected to you Homepage");
+      setTimeout(() => {
+        navigate("/");
+      }, [3000])
+    }
+  }, [user, navigate])
   const handleLogout = () => {
     //logout logic here
     axios
@@ -49,6 +70,16 @@ export default function DashboardLayout() {
         toast.success(error?.response?.data?.message);
 
       });
+
+      if(message){
+        return(
+          <div className="h-screen flex justify-center items-center">
+            <div className="text-center">
+              <p className="text-3xl">{message}</p>
+            </div>
+          </div>
+        )
+      }
 
   }
   return (
