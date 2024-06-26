@@ -1,5 +1,5 @@
 import express from 'express';
-import { registerController,loginController ,logoutController} from '../controllers/userController.js';
+import { registerController,loginController ,logoutController,allUsersController} from '../controllers/userController.js';
 
 
 const userRouter = express.Router();
@@ -8,6 +8,8 @@ const userRouter = express.Router();
 userRouter .post("/register",registerController);
 userRouter .post("/login",loginController)
 userRouter .get("/logout",logoutController)
+// Admin Routes
+userRouter .get("/all-users",allUsersController)
 
 
 

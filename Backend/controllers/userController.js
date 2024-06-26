@@ -82,11 +82,38 @@ const loginController = async (req, res) => {
 };
 const logoutController = async (req, res) => {
     // return success response
-    return res.cookie("token", "", { httpOnly: true, secure: true ,expires:new Date(0)})   // to remove cookies from browser
+    return res.cookie("token", "", { httpOnly: true, secure: true, expires: new Date(0) })   // to remove cookies from browser
         .status(200).send({
             success: true,
             message: "Logout successfully"
         });
 
+
+}
+
+const allUsersController = async (req, res) => {
+    try {
+        //find all users in database
+        const users = await userModel.find();
+        if (!users) {
+            return res.status(404).send({
+                success: false,
+                message: "No users found"
+            });
+        }
+        return res.status(200).send({
+            success: true,total: users.length,
+            users, 
+        });
+
+    } catch (error) {
+        console.log(`all users controller error ${error}`);
+        return res.status(400).send({
+            success: false,
+            message: "all users controller error",
+            error
+        });
+    }
 };
-export { registerController, loginController, logoutController };
+
+export { registerController, loginController, logoutController, allUsersController };
