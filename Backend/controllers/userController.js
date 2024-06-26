@@ -94,7 +94,7 @@ const logoutController = async (req, res) => {
 const allUsersController = async (req, res) => {
     try {
         //find all users in database
-        const users = await userModel.find();
+        const users = await userModel.find().select("-password");
         if (!users) {
             return res.status(404).send({
                 success: false,

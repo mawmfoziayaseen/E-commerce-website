@@ -35,7 +35,7 @@ function Users() {
                 x-chunk="dashboard-02-chunk-1"
             >
                 <div className="flex flex-col items-center gap-1 text-center">
-                    {JSON.stringify(users)};
+                    {JSON.stringify(users,undefined,4)};
 
 
                 </div>
