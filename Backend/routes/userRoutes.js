@@ -1,18 +1,20 @@
 import express from 'express';
-import { registerController,loginController ,logoutController,allUsersController} from '../controllers/userController.js';
+import { registerController, loginController, logoutController, allUsersController } from '../controllers/userController.js';
+import { isAdmin, isAuthorized } from '../middlewaves/authMiddleware.js';
+
 
 
 const userRouter = express.Router();
 
 // http://localhost:8080/api/v1/users/register
-userRouter .post("/register",registerController);
-userRouter .post("/login",loginController)
-userRouter .get("/logout",logoutController)
+userRouter.post("/register", registerController);
+userRouter.post("/login", loginController)
+userRouter.get("/logout", logoutController)
 // Admin Routes
-userRouter .get("/all-users",allUsersController)
+userRouter.get("/all-users", isAuthorized, isAdmin, allUsersController)
 
 
 
 
 
-export default userRouter ;
+export default userRouter;
