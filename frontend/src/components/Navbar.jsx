@@ -29,7 +29,7 @@ function Navbar() {
 
                     toast.success(response?.message, { autoClose: 2000 });
                     setTimeout(() => {
-                        navigate("/");
+                        navigate("/login");
                     }, 2000);
                 } else {
                     toast.error(response?.message, { autoClose: 2000 });
