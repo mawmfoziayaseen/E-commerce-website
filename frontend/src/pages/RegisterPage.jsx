@@ -1,4 +1,4 @@
-import { Link,useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -6,18 +6,21 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from 'react';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 
+import { useDispatch } from 'react-redux';
+import { register } from '@/store/features/auth/authSlice';
+
 export default function RegisterPage() {
-  
+
   const [inputValues, setInputValues] = useState({});
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -26,23 +29,24 @@ export default function RegisterPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post(`${import.meta.env.VITE_BASE_URL}/users/register`, inputValues, {
-      headers: { "Content-Type": "application/json" },
-    })
+    dispatch(register(inputValues))
+      .unwrap()
       .then((response) => {
-        console.log(response.data);
-        toast.success(response?.data?.message,{autoClose:2000});
-        setTimeout(() => {
-          navigate("/login");
-        }, 2000);
+        if (response?.success == true) {
 
-       
+          toast.success(response?.message, { autoClose: 2000 });
+          setTimeout(() => {
+            navigate("/");
+          }, 2000);
+        } else {
+          toast.error(response?.message, { autoClose: 2000 });
+
+        }
+
       })
       .catch((error) => {
-        console.log(error);
-        toast.error(error.response?.data?.message,{autoClose:2000});
-        setInputValues({});
-      });
+        toast.error(error, { autoClose: 2000 });
+      })
   };
 
   return (

@@ -1,6 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import authService from './authService.js';
 
+// use this function to register page
+export const register = createAsyncThunk
+    ("auth/register"
+        , async (inputValues, thunkAPI) => {
+            try {
+                const respone = await authService.registerUser(inputValues);
+                return respone;
+            } catch (error) {
+                return thunkAPI.rejectWithValue(error);
+
+            }
+        });
+
 
 // use this function to login page
 export const login = createAsyncThunk("auth/logic", async (inputValues, thunkAPI) => {
@@ -12,8 +25,6 @@ export const login = createAsyncThunk("auth/logic", async (inputValues, thunkAPI
         return thunkAPI.rejectWithValue(error);
 
     }
-
-
 });
 const getUserDataFromLocalStroge = window.localStorage.getItem("user") ?
     JSON.parse(window.localStorage.getItem("user")) : null;
