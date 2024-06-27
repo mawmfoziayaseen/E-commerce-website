@@ -37,10 +37,10 @@ const loginUser = async (inputValues) => {
 };
 
 // logout user here
-const loginout = async () => {
+const logout = async () => {
     try {
         const axiosRespone = await axios
-            .get(`${import.meta.env.VITE_BASE_URL}/users/logout`, inputValues, {
+            .get(`${import.meta.env.VITE_BASE_URL}/users/logout`,  {
                 withCredentials: true,   //axios send automatically cookies when we apply this property
                 headers: { "Content-Type": "application/json" },
             })
@@ -53,6 +53,6 @@ const loginout = async () => {
 
     }
 };
-const authService = { loginUser,registerUser,loginout }
+const authService = { loginUser,registerUser,logout }
 
 export default authService;

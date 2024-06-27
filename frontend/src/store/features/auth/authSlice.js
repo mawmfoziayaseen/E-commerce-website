@@ -32,7 +32,7 @@ export const logout = createAsyncThunk
     ("auth/logout"
         , async (thunkAPI) => {
             try {
-                const respone = await authService.logoutUser();
+                const respone = await authService.logout();
                 window.localStorage.removeItem("user");
                 return respone;
             } catch (error) {
@@ -59,22 +59,48 @@ export const outhSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(login.pending, (state) => {
-            state.status = "loading";
-        })
+        builder
+            .addCase(register.pending, (state) => {
+                state.status = "loading";
+                state.error = null;
+            })
+            .addCase(register.fulfilled, (state, action) => {
+                state.status = "succeeded";
+                state.user = action.payload;
+            })
+            .addCase(register.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
+            })
+            .addCase(login.pending, (state) => {
+                state.status = "loading";
+                state.error = null;
+            })
             .addCase(login.fulfilled, (state, action) => {
                 state.status = "succeeded";
                 state.user = action.payload;
             })
             .addCase(login.rejected, (state, action) => {
                 state.status = "failed";
-                state.error = action.error.message;
+                state.error = action.payload;
+            })
+            .addCase(logout.pending, (state) => {
+                state.status = "loading";
+                state.error = null;
+            })
+            .addCase(logout.fulfilled, (state) => {
+                state.status = "succeeded";
+                state.user = null;
+            })
+            .addCase(logout.rejected, (state, action) => {
+                state.status = "failed";
+                state.error = action.payload;
             });
     },
 
 });
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, incrementByAmount } = outhSlice.actions
+export const { incrementByAmount } = outhSlice.actions
 
 export default outhSlice.reducer

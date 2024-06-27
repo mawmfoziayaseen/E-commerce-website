@@ -53,34 +53,37 @@ export default function DashboardLayout() {
     }
   }, [user, navigate])
   const handleLogout = () => {
+    console.log("logout button clicked");
     //logout logic here
-    axios
-      .get(`${import.meta.env.VITE_BASE_URL}/users/logout`, {
-        withCredentials: true,   //axios send automatically cookies when we apply this property
-        headers: { "Content-Type": "application/json" },
-      })
+    dispatch(logout())
+      .unwrap()
       .then((response) => {
-        window.localStorage.removeItem("user");  // to remove data from local storage
-        toast.success(response?.data?.message, { autoClose: 2000 });
-        setTimeout(() => {
-          navigate("/login");
-        }, 2000);
+        if (response?.success == true) {
+
+          toast.success(response?.message, { autoClose: 2000 });
+          setTimeout(() => {
+            navigate("/");
+          }, 2000);
+        } else {
+          toast.error(response?.message, { autoClose: 2000 });
+
+        }
 
       })
       .catch((error) => {
-        toast.success(error?.response?.data?.message);
+        toast.error(error, { autoClose: 2000 });
+      })
 
-      });
 
-  if (message) {
-    return (
-          <div className="h-screen flex justify-center items-center">
-            <div className="text-center">
-              <p className="text-3xl">{message}</p>
-            </div>
+    if (message) {
+      return (
+        <div className="h-screen flex justify-center items-center">
+          <div className="text-center">
+            <p className="text-3xl">{message}</p>
           </div>
-        )
-      }
+        </div>
+      )
+    }
 
   }
   return (
