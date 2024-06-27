@@ -1,5 +1,5 @@
 import { CircleUser, Menu, Package2 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { Button } from "./ui/button";
 import {
@@ -10,9 +10,42 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "./ui/dropdown-menu";
+import { useDispatch } from "react-redux";
+import { logout } from "@/store/features/auth/authSlice";
+import { toast } from "react-toastify";
 
 
 function Navbar() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const handleLogout = () => {
+
+        console.log("logout button clicked");
+        //logout logic here
+        dispatch(logout())
+            .unwrap()
+            .then((response) => {
+                if (response?.success == true) {
+
+                    toast.success(response?.message, { autoClose: 2000 });
+                    setTimeout(() => {
+                        navigate("/");
+                    }, 2000);
+                } else {
+                    toast.error(response?.message, { autoClose: 2000 });
+
+                }
+
+            })
+            .catch((error) => {
+                toast.error(error, { autoClose: 2000 });
+            })
+
+
+
+      
+
+    }
     return (
         <>
             {/* Desktop Menu */}
@@ -129,7 +162,9 @@ function Navbar() {
                             <DropdownMenuItem>Settings</DropdownMenuItem>
                             <DropdownMenuItem>Support</DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>Logout</DropdownMenuItem>
+                            <DropdownMenuItem>
+                                <button onClick={handleLogout}>Logout</button>
+                            </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
