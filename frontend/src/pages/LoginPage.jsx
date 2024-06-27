@@ -45,7 +45,7 @@ export default function LoginPage() {
                 
             })
             .catch((error) => {
-                console.log(error);
+                toast.error(error, { autoClose: 2000 });
             })
 
 
