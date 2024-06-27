@@ -15,6 +15,7 @@ import {
 function Navbar() {
     return (
         <>
+            {/* Desktop Menu */}
             <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
                 <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
                     <Link
@@ -23,37 +24,36 @@ function Navbar() {
                     >
                         <Package2 className="h-6 w-6" />
                         <span className="sr-only">Acme Inc</span>
+                        <p className="text-xl">
+                            Shop<span className="text-orange-500">Wave</span>
+                        </p>
+                        <span className="sr-only">ShopWave</span>
                     </Link>
                     <Link
-                        href="#"
+                        to="/"
                         className="text-muted-foreground transition-colors hover:text-foreground"
                     >
-                        Dashboard
+                        Home
                     </Link>
                     <Link
-                        href="#"
+                        to="/shop"
                         className="text-muted-foreground transition-colors hover:text-foreground"
                     >
-                        Orders
+                        Shop
                     </Link>
                     <Link
-                        href="#"
+                        to="/about"
                         className="text-muted-foreground transition-colors hover:text-foreground"
                     >
-                        Products
+                        About
                     </Link>
                     <Link
-                        href="#"
+                        to="/contact"
                         className="text-muted-foreground transition-colors hover:text-foreground"
                     >
-                        Customers
+                        Contact
                     </Link>
-                    <Link
-                        href="#"
-                        className="text-foreground transition-colors hover:text-foreground"
-                    >
-                        Settings
-                    </Link>
+
                 </nav>
                 <Sheet>
                     <SheetTrigger asChild>
@@ -62,6 +62,7 @@ function Navbar() {
                             size="icon"
                             className="shrink-0 md:hidden"
                         >
+                            {/* Mobile Menu */}
                             <Menu className="h-5 w-5" />
                             <span className="sr-only">Toggle navigation menu</span>
                         </Button>
@@ -73,42 +74,45 @@ function Navbar() {
                                 className="flex items-center gap-2 text-lg font-semibold"
                             >
                                 <Package2 className="h-6 w-6" />
-                                <span className="sr-only">Acme Inc</span>
+                                <p className="text-xl">
+                                    Shop<span className="text-orange-500">Wave</span>
+                                </p>
+
+                                <span className="sr-only">ShopWave</span>
+
                             </Link>
                             <Link
-                                href="#"
+                                to="/"
                                 className="text-muted-foreground hover:text-foreground"
                             >
-                                Dashboard
+                                Home
                             </Link>
                             <Link
-                                href="#"
+                                to="/shop"
                                 className="text-muted-foreground hover:text-foreground"
                             >
-                                Orders
+                                Shop
                             </Link>
                             <Link
-                                href="#"
+                                to="/about"
                                 className="text-muted-foreground hover:text-foreground"
                             >
-                                Products
+                                About
                             </Link>
                             <Link
-                                href="#"
+                                to="/contact"
                                 className="text-muted-foreground hover:text-foreground"
                             >
-                                Customers
+                                Contact
                             </Link>
-                            <Link href="#" className="hover:text-foreground">
-                                Settings
-                            </Link>
+
                         </nav>
                     </SheetContent>
                 </Sheet>
                 <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
-                    <div className="ml-auto flex-1 sm:flex-initial">
+                    <div className="ml-auto  sm:flex-initial">
                         <div className="relative">
-                            search
+                            Cart (0)
 
                         </div>
                     </div>
