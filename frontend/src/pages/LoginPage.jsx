@@ -10,7 +10,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
-import { Link ,useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { useDispatch } from 'react-redux';
 import { login } from "../store/features/auth/authSlice.js";
@@ -32,17 +32,17 @@ export default function LoginPage() {
         dispatch(login(inputValues))
             .unwrap()
             .then((response) => {
-                console.log(response);
                 if (response?.success == true) {
+
                     toast.success(response?.message, { autoClose: 2000 });
                     setTimeout(() => {
                         navigate("/");
-                      }, 2000);
-                }else{
+                    }, 2000);
+                } else {
                     toast.error(response?.message, { autoClose: 2000 });
 
                 }
-                
+
             })
             .catch((error) => {
                 toast.error(error, { autoClose: 2000 });

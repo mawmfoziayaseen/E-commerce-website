@@ -5,7 +5,9 @@ import authService from './authService.js';
 // use this function to login page
 export const login = createAsyncThunk("auth/logic", async (inputValues, thunkAPI) => {
     try {
-        return await authService.loginUser(inputValues);
+        const respone = await authService.loginUser(inputValues);
+        window.localStorage.setItem("user", JSON.stringify(respone));
+        return respone;
     } catch (error) {
         return thunkAPI.rejectWithValue(error);
 
