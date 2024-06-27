@@ -8,11 +8,13 @@ import Dashboard from "./pages/Admin/Dashboard";
 import Users from "./pages/Admin/Users";
 import Products from "./pages/Admin/Products";
 import Orders from "./pages/Admin/Orders";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <>
       <BrowserRouter>
+      <Navbar/>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/admin" element={<DashboardLayout />}>
