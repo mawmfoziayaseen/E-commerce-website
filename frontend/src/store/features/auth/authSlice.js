@@ -30,7 +30,7 @@ export const login = createAsyncThunk("auth/login", async (inputValues, thunkAPI
 // use this function to logout page    in dashboard
 export const logout = createAsyncThunk
     ("auth/logout"
-        , async ( thunkAPI) => {
+        , async (thunkAPI) => {
             try {
                 const respone = await authService.logoutUser();
                 window.localStorage.removeItem("user");

@@ -3,7 +3,7 @@ import {
   Bell,
   CircleUser,
   Home,
-  LineChart,
+
   Menu,
   Package,
   Package2,
@@ -25,16 +25,17 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import axios from "axios";
+
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { logout } from "@/store/features/auth/authSlice";
 
 export default function DashboardLayout() {
   const navigate = useNavigate();
- const[message,setMessage]= useState(null);
+  const [message, setMessage] = useState(null);
   const user = useSelector((state) => state.auth.user?.user);
-  console.log(user)
+  const dispatch = useDispatch();
 
 
   useEffect(() => {
@@ -71,8 +72,8 @@ export default function DashboardLayout() {
 
       });
 
-      if(message){
-        return(
+  if (message) {
+    return (
           <div className="h-screen flex justify-center items-center">
             <div className="text-center">
               <p className="text-3xl">{message}</p>
