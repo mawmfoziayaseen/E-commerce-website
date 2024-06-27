@@ -16,7 +16,7 @@ export const register = createAsyncThunk
 
 
 // use this function to login page
-export const login = createAsyncThunk("auth/logic", async (inputValues, thunkAPI) => {
+export const login = createAsyncThunk("auth/login", async (inputValues, thunkAPI) => {
     try {
         const respone = await authService.loginUser(inputValues);
         window.localStorage.setItem("user", JSON.stringify(respone));
@@ -26,6 +26,21 @@ export const login = createAsyncThunk("auth/logic", async (inputValues, thunkAPI
 
     }
 });
+
+// use this function to logout page    in dashboard
+export const logout = createAsyncThunk
+    ("auth/logout"
+        , async ( thunkAPI) => {
+            try {
+                const respone = await authService.logoutUser();
+                window.localStorage.removeItem("user");
+                return respone;
+            } catch (error) {
+                return thunkAPI.rejectWithValue(error);
+
+            }
+        });
+
 const getUserDataFromLocalStroge = window.localStorage.getItem("user") ?
     JSON.parse(window.localStorage.getItem("user")) : null;
 

@@ -18,7 +18,7 @@ const registerUser = async (inputValues) => {
 
     }
 };
-
+// login user here
 const loginUser = async (inputValues) => {
     try {
         const axiosRespone = await axios
@@ -35,6 +35,24 @@ const loginUser = async (inputValues) => {
 
     }
 };
-const authService = { loginUser,registerUser }
+
+// logout user here
+const loginout = async () => {
+    try {
+        const axiosRespone = await axios
+            .get(`${import.meta.env.VITE_BASE_URL}/users/logout`, inputValues, {
+                withCredentials: true,   //axios send automatically cookies when we apply this property
+                headers: { "Content-Type": "application/json" },
+            })
+        return axiosRespone.data;
+    } catch (error) {
+        const errorMessage = error
+        .respone?.data?.message || error.message || "something went wrong please try again";
+        return Promise.reject(errorMessage);
+
+
+    }
+};
+const authService = { loginUser,registerUser,loginout }
 
 export default authService;
