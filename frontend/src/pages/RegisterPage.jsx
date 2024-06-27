@@ -13,12 +13,13 @@ import { Label } from "@/components/ui/label";
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { register } from '@/store/features/auth/authSlice';
 
 export default function RegisterPage() {
 
   const [inputValues, setInputValues] = useState({});
+  const {status} = useSelector((state) => state.auth)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleChange = (e) => {
@@ -92,8 +93,8 @@ export default function RegisterPage() {
                   onChange={handleChange}
                 />
               </div>
-              <Button type="submit" className="w-full">
-                Create an account
+              <Button type="submit" className="w-full"   disabled={status == "loading" ? true : false}>
+              {status == "loading" ? "Creating Account ....." : "Create Account"}
               </Button>
             </div>
           </form>

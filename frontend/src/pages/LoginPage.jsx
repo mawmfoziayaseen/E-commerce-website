@@ -12,12 +12,14 @@ import { Label } from "@/components/ui/label"
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from "../store/features/auth/authSlice.js";
 
 
 export default function LoginPage() {
     const [inputValues, setInputValues] = useState({});
+    // const status = useSelector((state)=>state.auth.status)
+    const {status} = useSelector((state) => state.auth)
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -86,7 +88,12 @@ export default function LoginPage() {
                         </div>
                     </CardContent>
                     <CardFooter>
-                        <Button className="w-full">Sign in</Button>
+                        <Button className="w-full"
+                            disabled={status == "loading" ? true : false}
+                        >
+                            {status == "loading" ? "singing in ....." : "Sign in"}
+
+                        </Button>
 
                     </CardFooter>
                 </form>
