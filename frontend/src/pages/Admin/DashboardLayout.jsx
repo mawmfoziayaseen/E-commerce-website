@@ -7,6 +7,7 @@ import {
   Menu,
   Package,
   Package2,
+  Package2Icon,
   Search,
   ShoppingCart,
   Users,
@@ -45,11 +46,11 @@ export default function DashboardLayout() {
         navigate("/login");
       }, 3000)
     }
-    else if (!user.role !== 1) {
+    else if (user.role !== 1) {
       setMessage("You are not Authorize this Resource Redirected to you Homepage");
       setTimeout(() => {
         navigate("/");
-      }, [3000])
+      }, 3000)
     }
   }, [user, navigate])
   const handleLogout = () => {
@@ -128,6 +129,13 @@ export default function DashboardLayout() {
                 Products{" "}
               </Link>
               <Link
+                to="/admin/catagories"
+                className="flex items-center gap-3 rounded-lg  px-3 py-2 text-muted-foreground transition-all hover:text-primary"
+              >
+                <Package2Icon className="h-4 w-4" />
+                Catagories{" "}
+              </Link>
+              <Link
                 to="/admin/users"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
@@ -183,6 +191,13 @@ export default function DashboardLayout() {
                 >
                   <Package className="h-5 w-5" />
                   Products
+                </Link>
+                <Link
+                  to="/admin/catagories"
+                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+                >
+                  <Package2Icon className="h-5 w-5" />
+                  Catagories
                 </Link>
                 <Link
                   to="/admin/users"

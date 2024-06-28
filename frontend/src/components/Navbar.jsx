@@ -26,7 +26,7 @@ function Navbar() {
         dispatch(logout())
             .unwrap()
             .then((response) => {
-                if (response?.success == true) {
+                if (response?.success === true) {
 
                     toast.success(response?.message, { autoClose: 2000 });
                     setTimeout(() => {
@@ -188,6 +188,7 @@ function Navbar() {
                                         <DropdownMenuItem>
                                             <button onClick={handleLogout}>Logout</button>
                                         </DropdownMenuItem>
+
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             )}
