@@ -41,5 +41,26 @@ const createCategoriesController = async (req, res) => {
       });
   }
 };
-
-export { createCategoriesController };
+const getAllCategoriesController = async (req, res) => {
+    try {
+    
+      // basefetching all categories from data
+      const Categories = await categoriesModel.find({});
+   
+      return res.status(201).send({
+        success: true,
+        message: "Category created successfully",
+        Categories,
+      });
+    } catch (error) {
+      console.log(`getAllCategoriesController error  ${error}`);
+      return res
+        .status(400)
+        .send({
+          success: false,
+          message: "getAllCategoriesController error",
+          error,
+        });
+    }
+  };
+export { createCategoriesController,getAllCategoriesController  };
