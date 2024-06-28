@@ -45,7 +45,7 @@ export default function DashboardLayout() {
         navigate("/login");
       }, 3000)
     }
-    else if (user.role !== 1) {
+    else if (!user.role !== 1) {
       setMessage("You are not Authorize this Resource Redirected to you Homepage");
       setTimeout(() => {
         navigate("/");
@@ -73,20 +73,21 @@ export default function DashboardLayout() {
       .catch((error) => {
         toast.error(error, { autoClose: 2000 });
       })
-    
-
-
-    if (message) {
-      return (
-        <div className="h-screen flex justify-center items-center">
-          <div className="text-center">
-            <p className="text-3xl">{message}</p>
-          </div>
-        </div>
-      )
-    }
-
   }
+
+
+
+  if (message) {
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <div className="text-center">
+          <p className="text-3xl">{message}</p>
+        </div>
+      </div>
+    )
+  }
+
+
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       {/* Desktop Menu */}

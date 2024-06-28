@@ -10,7 +10,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "./ui/dropdown-menu";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/store/features/auth/authSlice";
 import { toast } from "react-toastify";
 
@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 function Navbar() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const user = useSelector((state) => state.auth.user?.user);
     const handleLogout = () => {
 
         console.log("logout button clicked");
@@ -40,12 +41,7 @@ function Navbar() {
             .catch((error) => {
                 toast.error(error, { autoClose: 2000 });
             })
-
-
-
-      
-
-    }
+    };
     return (
         <>
             {/* Desktop Menu */}
@@ -149,12 +145,57 @@ function Navbar() {
 
                         </div>
                     </div>
-             abc
+                    {
+                        user == null ? (
+                            <div>
+                                <Button variant="outline" className="me-2">
+
+                                    <Link to="/login">Login</Link>
+                                </Button>
+                                <Button >
+                                    <Link to="/register">Register</Link>
+                                </Button>
+                            </div>
+                        )
+
+                            :
+                            (
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button
+                                            variant="secondary"
+                                            size="icon"
+                                            className="rounded-full">
+                                            <CircleUser className="h-5 w-5" />
+                                            <span className="sr-only">Toggle user menu</span>
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="end">
+                                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                                        <DropdownMenuSeparator />
+
+                                        <DropdownMenuItem>
+                                            {user.role === 1 ? (<Link to="/admin">Dashboard</Link>
+                                            )
+                                                : (
+                                                    <Link to="/profile">Profile</Link>)}
+
+
+
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem>Support</DropdownMenuItem>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuItem>
+                                            <button onClick={handleLogout}>Logout</button>
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            )}
                 </div>
             </header>
 
         </>
-    )
+    );
 }
 
-export default Navbar
+export default Navbar;

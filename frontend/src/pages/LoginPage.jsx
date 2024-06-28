@@ -19,7 +19,7 @@ import { login } from "../store/features/auth/authSlice.js";
 export default function LoginPage() {
     const [inputValues, setInputValues] = useState({});
     // const status = useSelector((state)=>state.auth.status)
-    const {status} = useSelector((state) => state.auth)
+    const { status } = useSelector((state) => state.auth)
     const dispatch = useDispatch();
     const navigate = useNavigate();
 

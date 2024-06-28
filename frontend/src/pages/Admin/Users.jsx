@@ -1,8 +1,8 @@
 import axios from "axios";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 function Users() {
-    const [users, setUsers] = useState();
+    const [users, setUsers] = useState({});
 
     const getAllUsers = () => {
 
@@ -35,7 +35,7 @@ function Users() {
                 x-chunk="dashboard-02-chunk-1"
             >
                 <div className="flex flex-col items-center gap-1 text-center">
-                    {JSON.stringify(users,undefined,4)};
+                    {JSON.stringify(users, undefined, 4)};
 
 
                 </div>
