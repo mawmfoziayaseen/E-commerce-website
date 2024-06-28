@@ -13,6 +13,7 @@ import About from "./pages/About";
 import Shop from "./pages/Shop";
 import Contract from "./pages/Contract";
 import Profile from "./pages/Profile";
+import Categories from "./pages/Admin/Categories";
 
 function App() {
   const location = useLocation();
@@ -35,6 +36,7 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="users" element={<Users />} />
           <Route path="products" element={<Products />} />
+          <Route path="categories" element={<Categories/>} />
           <Route path="orders" element={<Orders />} />
         </Route>
       </Routes>
