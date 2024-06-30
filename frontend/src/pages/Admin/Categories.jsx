@@ -8,7 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AddCategory, getAllCategories } from "@/store/features/Categories/CategoriesSlice";
 import { toast } from "react-toastify";
 import {
@@ -31,6 +31,10 @@ import { MoreHorizontal } from "lucide-react";
 
 function Categories() {
   const [inputValues, setInputValues] = useState({});
+  const categories= useSelector((state)=>state.categories.categories);
+  const status= useSelector((state)=>state.categories.status);
+  const error= useSelector((state)=>state.categories.error);
+
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -57,21 +61,21 @@ function Categories() {
   useEffect(() => {
     dispatch(getAllCategories());
   }, [dispatch]);
-  // if (status == "loading") {
-  //   return (
-  //     <div className="flex justify-center items-center h-full">
-  //       <p>Loading Categories....</p>
-  //     </div>
-  //   );
-  // }
+  if (status == "loading") {
+    return (
+      <div className="flex justify-center items-center h-full">
+        <p>Loading Categories....</p>
+      </div>
+    );
+  }
 
-  // if (error == "error") {
-  //   return (
-  //     <div className="flex justify-center items-center h-full">
-  //       <p>Error while fetching Categories....</p>
-  //     </div>
-  //   );
-  // }
+  if (error == "error") {
+    return (
+      <div className="flex justify-center items-center h-full">
+        <p>Error while fetching Categories....</p>
+      </div>
+    );
+  }
 
   return (
     <>
