@@ -49,7 +49,7 @@ const getAllCategoriesController = async (req, res) => {
    
       return res.status(201).send({
         success: true,
-        message: "Category created successfully",
+        message: "Categories fetched successfully",
         Categories,
       });
     } catch (error) {
