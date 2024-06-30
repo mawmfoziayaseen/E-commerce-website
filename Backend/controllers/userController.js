@@ -103,7 +103,7 @@ const allUsersController = async (req, res) => {
             return res.status(404).send({
                 success: false,
                 message: "No users found"
-            });
+            }); 
         }
         return res.status(200).send({
             success: true, total: users.length,

@@ -8,6 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
+import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import {
   AddCategory,
@@ -22,7 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,10 +35,10 @@ import { MoreHorizontal } from "lucide-react";
 
 function Categories() {
   const [inputValues, setInputValues] = useState({});
-  const categories= useSelector((state)=>state.categories.categories);
-  const status= useSelector((state)=>state.categories.status);
-  const error= useSelector((state)=>state.categories.error);
-
+  const categoriesState = useSelector((state) => state.categories);
+  const categories = categoriesState.categories.Categories; // Corrected access
+  const status = categoriesState.status;
+  const error = categoriesState.error;
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -53,6 +54,8 @@ function Categories() {
       .then((response) => {
         if (response?.success == true) {
           toast.success(response?.message, { autoClose: 2000 });
+          setInputValues({});
+          dispatch(getAllCategories());
         } else {
           toast.error(response?.message, { autoClose: 2000 });
         }
@@ -64,6 +67,9 @@ function Categories() {
   useEffect(() => {
     dispatch(getAllCategories());
   }, [dispatch]);
+  console.log("Status:", status);
+  console.log("Categories:", categories);
+  console.log("Error:", error);
   if (status == "loading") {
     return (
       <div className="flex justify-center items-center h-full">
@@ -112,7 +118,6 @@ function Categories() {
         <Table>
           <TableHeader>
             <TableRow>
-            
               <TableHead>Sr.#</TableHead>
               <TableHead>Name</TableHead>
               <TableHead>Slug</TableHead>
@@ -121,32 +126,44 @@ function Categories() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell >Category Number</TableCell>
-              <TableCell >Category Name</TableCell>
-              <TableCell >Category Slug</TableCell>
-              <TableCell >Category Date</TableCell>
-
-              <TableCell>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button aria-haspopup="true" size="icon" variant="ghost">
-                      <MoreHorizontal className="h-4 w-4" />
-                      <span className="sr-only">Toggle menu</span>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                    <DropdownMenuItem>Edit</DropdownMenuItem>
-                    <DropdownMenuItem>Delete</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
-
- 
-           
-           
+            {
+              Array.isArray(categories) && categories.length > 0 ? (
+                categories.map((category, index) => (
+                  <TableRow key={category._id}>
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell  className="capitalize">{category.name}</TableCell>
+                    <TableCell>{category.slug}</TableCell>
+                    <TableCell>
+                      {moment(category.createdAt).format("DD-MM-YYYY")}
+                    </TableCell>
+                    <TableCell>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            aria-haspopup="true"
+                            size="icon"
+                            variant="ghost"
+                          >
+                            <MoreHorizontal className="h-4 w-4" />
+                            <span className="sr-only">Toggle menu</span>
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                          <DropdownMenuItem>Edit</DropdownMenuItem>
+                          <DropdownMenuItem>Delete</DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={5}>No categories found</TableCell>
+                </TableRow>
+              )
+              // })}
+            }
           </TableBody>
         </Table>
       </section>
