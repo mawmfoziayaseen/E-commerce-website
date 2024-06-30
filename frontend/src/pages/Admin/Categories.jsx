@@ -9,7 +9,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AddCategory, getAllCategories } from "@/store/features/Categories/CategoriesSlice";
+import {
+  AddCategory,
+  getAllCategories,
+} from "@/store/features/Categories/CategoriesSlice";
 import { toast } from "react-toastify";
 import {
   Table,
