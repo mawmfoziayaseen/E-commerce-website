@@ -33,6 +33,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 function Categories() {
   const [inputValues, setInputValues] = useState({});
@@ -41,6 +42,7 @@ function Categories() {
   const status = categoriesState.status;
   const error = categoriesState.error;
   const dispatch = useDispatch();
+  const navigate =useNavigate();
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -117,13 +119,13 @@ function Categories() {
                 <Input
                   id="name"
                   type="text"
-                  placeholder="categories Name"
+                  placeholder="Category Name"
                   required
                   name="name"
                   value={inputValues.name || ""}
                   onChange={handleChange}
                 />
-                <Button>Add Categories</Button>
+                <Button>Add Category</Button>
               </div>
             </form>
           </CardContent>
@@ -165,8 +167,15 @@ function Categories() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                          <DropdownMenuItem>Edit</DropdownMenuItem>
                           <DropdownMenuItem>
+                          <button onClick={()=>{
+                              navigate(`/admin/categories/update/${category.slug}`)
+                            }}>
+                              Edit
+                            </button>
+                            </DropdownMenuItem>
+                          <DropdownMenuItem>
+                           
                             <button onClick={()=>{handleDelete (category.slug)}}>Delete</button>
                           </DropdownMenuItem>
                         </DropdownMenuContent>

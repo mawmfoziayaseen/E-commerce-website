@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 // import { getAllCategories } from "@/store/features/Categories/CategoriesSlice";
 import { useState } from "react";
@@ -32,7 +32,7 @@ function UpdateCategory() {
   };
   return (
     <>
-      <div>
+     <div>
         <Card>
           <CardHeader>
             <CardTitle>Update Category </CardTitle>
@@ -46,7 +46,7 @@ function UpdateCategory() {
                 <Input
                   id="name"
                   type="text"
-                  placeholder="categories Name"
+                  placeholder="Category Name"
                   required
                   name="name"
                   value={inputValues.name || ""}
