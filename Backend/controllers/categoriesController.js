@@ -58,4 +58,36 @@ const getAllCategoriesController = async (req, res) => {
     });
   }
 };
-export { createCategoriesController, getAllCategoriesController };
+const deleteCategoriesController = async (req, res) => {
+  try {
+    const { slug } = req.params;
+    // fetching category  for delete from database
+    const Category = await categoriesModel.findOneAndDelete({ slug });
+    if (!Category) {
+      return res.status(400).send({
+        success: false,
+        message: "Category not found",
+        });
+    }
+      
+    
+
+    return res.status(201).send({
+      success: true,
+      message: "Category deleted successfully",
+    });
+  } catch (error) {
+    console.log(`deleteCategoriesController error  ${error}`);
+    return res.status(400).send({
+      success: false,
+      message: "deleteCategoriesController error",
+      error,
+    });
+  }
+};
+
+export {
+  createCategoriesController,
+  getAllCategoriesController,
+  deleteCategoriesController,
+};

@@ -12,6 +12,7 @@ import moment from "moment";
 import { useDispatch, useSelector } from "react-redux";
 import {
   AddCategory,
+  deleteCategory,
   getAllCategories,
 } from "@/store/features/Categories/CategoriesSlice";
 import { toast } from "react-toastify";
@@ -64,12 +65,26 @@ function Categories() {
         toast.error(error, { autoClose: 2000 });
       });
   };
+  const handleDelete = (slug) => {
+    dispatch(deleteCategory(slug))
+    .unwrap()
+    .then((response) => {
+      if (response?.success == true) {
+        toast.success(response?.message, { autoClose: 2000 });
+        setInputValues({});
+        dispatch(getAllCategories());
+      } else {
+        toast.error(response?.message, { autoClose: 2000 });
+      }
+    })
+    .catch((error) => {
+      toast.error(error, { autoClose: 2000 });
+    });
+  }
   useEffect(() => {
     dispatch(getAllCategories());
   }, [dispatch]);
-  console.log("Status:", status);
-  console.log("Categories:", categories);
-  console.log("Error:", error);
+
   if (status == "loading") {
     return (
       <div className="flex justify-center items-center h-full">
@@ -151,7 +166,9 @@ function Categories() {
                         <DropdownMenuContent align="end">
                           <DropdownMenuLabel>Actions</DropdownMenuLabel>
                           <DropdownMenuItem>Edit</DropdownMenuItem>
-                          <DropdownMenuItem>Delete</DropdownMenuItem>
+                          <DropdownMenuItem>
+                            <button onClick={()=>{handleDelete (category.slug)}}>Delete</button>
+                          </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>

@@ -3,7 +3,7 @@ import categoriesService from "./CategoriesService.js";
 
 // use this function to register page
 export const AddCategory = createAsyncThunk(
-  "categories/AddCategory ",
+  "categories/AddCategory",
   async (inputValues, thunkAPI) => {
     try {
       const respone = await categoriesService.createCat(inputValues);
@@ -19,6 +19,18 @@ export const getAllCategories = createAsyncThunk(
   async (thunkAPI) => {
     try {
       const respone = await categoriesService.getAllCat();
+      return respone;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+// use this function to delete categories
+export const deleteCategory = createAsyncThunk(
+  "categories/deleteCategory",
+  async (slug, thunkAPI) => {
+    try {
+      const respone = await categoriesService.deleteCat(slug);
       return respone;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -60,6 +72,18 @@ export const categoriesSlice = createSlice({
         state.categories = action.payload;
       })
       .addCase(getAllCategories.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      .addCase(deleteCategory.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(deleteCategory.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.categories = action.payload;
+      })
+      .addCase(deleteCategory.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });

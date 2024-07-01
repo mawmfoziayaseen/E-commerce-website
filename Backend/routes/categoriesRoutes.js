@@ -1,7 +1,7 @@
 import express from 'express';
 
 import { isAdmin, isAuthorized } from '../middlewaves/authMiddleware.js';
-import { createCategoriesController, getAllCategoriesController } from '../controllers/categoriesController.js';
+import { createCategoriesController, getAllCategoriesController ,deleteCategoriesController} from '../controllers/categoriesController.js';
 
 
 
@@ -15,5 +15,7 @@ categoriesRouter.get("/",  getAllCategoriesController)
 
 // Admin Routes
 categoriesRouter.post("/", isAuthorized, isAdmin, createCategoriesController)
+// delete Routes of categories
+categoriesRouter.delete("/:slug", isAuthorized, isAdmin, deleteCategoriesController)
 
 export default categoriesRouter;
