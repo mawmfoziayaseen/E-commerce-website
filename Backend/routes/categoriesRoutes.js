@@ -1,21 +1,39 @@
-import express from 'express';
+import express from "express";
 
-import { isAdmin, isAuthorized } from '../middlewaves/authMiddleware.js';
-import { createCategoriesController, getAllCategoriesController ,deleteCategoriesController} from '../controllers/categoriesController.js';
-
-
+import { isAdmin, isAuthorized } from "../middlewaves/authMiddleware.js";
+import {
+  createCategoriesController,
+  getAllCategoriesController,
+  deleteCategoriesController,
+  updateCategoriesController,
+} from "../controllers/categoriesController.js";
 
 const categoriesRouter = express.Router();
 
-
 // http://localhost:8080/api/v1/categories -->get
-categoriesRouter.get("/",  getAllCategoriesController)
+categoriesRouter.get("/", getAllCategoriesController);
 
 // http://localhost:8080/api/v1/categories -->POST
 
 // Admin Routes
-categoriesRouter.post("/", isAuthorized, isAdmin, createCategoriesController)
+categoriesRouter.post("/", isAuthorized, isAdmin, createCategoriesController);
+
 // delete Routes of categories
-categoriesRouter.delete("/:slug", isAuthorized, isAdmin, deleteCategoriesController)
+// http://localhost:8080/api/v1/categories/:slug -->Delete
+categoriesRouter.delete(
+  "/:slug",
+  isAuthorized,
+  isAdmin,
+  deleteCategoriesController
+);
+
+// update Routes of categories
+// http://localhost:8080/api/v1/categories/:slug -->Put
+categoriesRouter.put(
+  "/:slug",
+  isAuthorized,
+  isAdmin,
+  updateCategoriesController
+);
 
 export default categoriesRouter;

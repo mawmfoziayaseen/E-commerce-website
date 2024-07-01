@@ -67,10 +67,8 @@ const deleteCategoriesController = async (req, res) => {
       return res.status(400).send({
         success: false,
         message: "Category not found",
-        });
+      });
     }
-      
-    
 
     return res.status(201).send({
       success: true,
@@ -85,9 +83,44 @@ const deleteCategoriesController = async (req, res) => {
     });
   }
 };
+const updateCategoriesController = async (req, res) => {
+  try {
+    const { slug } = req.params;
+    const { name } = req.body;
+    // fetching category  for update from database
+    // vaildation check
+    if (!name) {
+      return res
+        .status(400)
+        .send({ success: false, message: "Category name is required" });
+    }
+    // fetching category  for delete from database
+    const Category = await categoriesModel.findOneAndUpdate({ slug },
+      {name,slug:slugify(name,{lower:true,strict:true})},{new:true});
+    if (!Category) {
+      return res.status(400).send({
+        success: false,
+        message: "Category not found",
+      });
+    }
+
+    return res.status(201).send({
+      success: true,
+      message: "Category updateded successfully",
+    });
+  } catch (error) {
+    console.log(`updateCategoriesController error  ${error}`);
+    return res.status(400).send({
+      success: false,
+      message: "updateCategoriesController error",
+      error,
+    });
+  }
+};
 
 export {
   createCategoriesController,
   getAllCategoriesController,
   deleteCategoriesController,
+  updateCategoriesController,
 };
