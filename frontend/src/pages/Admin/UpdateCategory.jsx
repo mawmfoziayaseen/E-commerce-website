@@ -7,20 +7,37 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { getSingleCategory } from "@/store/features/Categories/CategoriesSlice";
+import { getSingleCategory, updateCategory } from "@/store/features/Categories/CategoriesSlice";
 // import { getAllCategories } from "@/store/features/Categories/CategoriesSlice";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 // import { toast } from "react-toastify";
 
 function UpdateCategory() {
   const [catName, setCatName] = useState({});
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { slug } = useParams();
+
+  // function start
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(updateCategory({name:catName,slug}))
+    .unwrap()
+    .then((response) => {
+      if (response?.success == true) {
+        toast.success(response?.message, { autoClose: 2000 });
+       navigate("/admin/categories");
+        console.log(response)
+      } else {
+        toast.error(response?.message, { autoClose: 2000 });
+      }
+    })
+    .catch((error) => {
+      toast.error(error, { autoClose: 2000 });
+    });
   };
   useEffect(() => {
     dispatch(getSingleCategory(slug))

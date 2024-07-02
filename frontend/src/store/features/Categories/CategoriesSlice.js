@@ -38,6 +38,18 @@ export const getSingleCategory = createAsyncThunk(
     }
   }
 );
+// use this function to register page
+export const updateCategory = createAsyncThunk(
+  "categories/updateCategory",
+  async ({ name, slug }, thunkAPI) => {
+    try {
+      const respone = await categoriesService.updateCat({ name, slug });
+      return respone;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
 // use this function to delete categories
 export const deleteCategory = createAsyncThunk(
@@ -101,19 +113,30 @@ export const categoriesSlice = createSlice({
         state.status = "failed";
         state.error = action.payload;
       })
-      .addCase( getSingleCategory.pending, (state) => {
+      .addCase(getSingleCategory.pending, (state) => {
         state.status = "loading";
         state.error = null;
       })
-      .addCase( getSingleCategory.fulfilled, (state, action) => {
+      .addCase(getSingleCategory.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.categories = action.payload;
       })
-      .addCase( getSingleCategory.rejected, (state, action) => {
+      .addCase(getSingleCategory.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      .addCase(updateCategory.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(updateCategory.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.categories = action.payload;
+      })
+      .addCase(updateCategory.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });
-
   },
 });
 
