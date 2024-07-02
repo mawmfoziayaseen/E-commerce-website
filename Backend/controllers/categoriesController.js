@@ -121,9 +121,9 @@ const updateCategoriesController = async (req, res) => {
         .send({ success: false, message: "Category name is required" });
     }
     // fetching category  for delete from database
-    const Category = await categoriesModel.findOneAndUpdate({ slug },
+    const category = await categoriesModel.findOneAndUpdate({ slug },
       {name,slug:slugify(name,{lower:true,strict:true})},{new:true});
-    if (!Category) {
+    if (!category) {
       return res.status(400).send({
         success: false,
         message: "Category not found",
