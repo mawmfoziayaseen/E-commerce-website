@@ -188,7 +188,7 @@ function Categories() {
                   <TableCell colSpan={5}>No categories found</TableCell>
                 </TableRow>
               )
-              // })}
+            
             }
           </TableBody>
         </Table>

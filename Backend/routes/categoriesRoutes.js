@@ -6,6 +6,7 @@ import {
   getAllCategoriesController,
   deleteCategoriesController,
   updateCategoriesController,
+  getsingleCategoriesController,
 } from "../controllers/categoriesController.js";
 
 const categoriesRouter = express.Router();
@@ -34,6 +35,14 @@ categoriesRouter.put(
   isAuthorized,
   isAdmin,
   updateCategoriesController
+);
+
+// http://localhost:8080/api/v1/categories/:slug -->get
+categoriesRouter.get(
+  "/:slug",
+  isAuthorized,
+  isAdmin,
+  getsingleCategoriesController
 );
 
 export default categoriesRouter;

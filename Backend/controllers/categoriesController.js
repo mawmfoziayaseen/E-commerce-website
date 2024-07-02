@@ -83,6 +83,32 @@ const deleteCategoriesController = async (req, res) => {
     });
   }
 };
+const getsingleCategoriesController = async (req, res) => {
+  try {
+    const { slug } = req.params;
+    // fetching category  for delete from database
+    const category = await categoriesModel.findOne({ slug });
+    if (!category) {
+      return res.status(400).send({
+        success: false,
+        message: "Category not found",
+      });
+    }
+
+    return res.status(201).send({
+      success: true,
+      message: "Category  is fetched successfully",
+      category,
+    });
+  } catch (error) {
+    console.log(`getsingleCategoriesController rror  ${error}`);
+    return res.status(400).send({
+      success: false,
+      message: "getsingleCategoriesController error",
+      error,
+    });
+  }
+};
 const updateCategoriesController = async (req, res) => {
   try {
     const { slug } = req.params;
@@ -122,5 +148,5 @@ export {
   createCategoriesController,
   getAllCategoriesController,
   deleteCategoriesController,
-  updateCategoriesController,
+  updateCategoriesController,getsingleCategoriesController 
 };

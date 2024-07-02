@@ -1,38 +1,46 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { getSingleCategory } from "@/store/features/Categories/CategoriesSlice";
 // import { getAllCategories } from "@/store/features/Categories/CategoriesSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 // import { toast } from "react-toastify";
 
 function UpdateCategory() {
-  const [inputValues, setInputValues] = useState({});
+  const [catName, setCatName] = useState({});
   const dispatch = useDispatch();
-  const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setInputValues((values) => ({ ...values, [name]: value }));
-  };
+  const { slug } = useParams();
   const handleSubmit = (e) => {
     e.preventDefault();
-    // dispatch(getAllCategories());
-    // console
-    //   .log(inputValues)
-    //   .unwrap()
-    //   .then((response) => {
-    //     if (response?.success == true) {
-    //       toast.success(response?.message, { autoClose: 2000 });
-    //       setInputValues({});
-
-    //     } else {
-    //       toast.error(response?.message, { autoClose: 2000 });
-    //     }
-    //   });
   };
+  useEffect(() => {
+    dispatch(getSingleCategory(slug))
+      .unwrap()
+      .then((response) => {
+        if (response?.success == true) {
+          toast.success(response?.message, { autoClose: 2000 });
+          setCatName(response.category?.name);
+          console.log(response)
+        } else {
+          toast.error(response?.message, { autoClose: 2000 });
+        }
+      })
+      .catch((error) => {
+        toast.error(error, { autoClose: 2000 });
+      });
+  }, [dispatch, slug]);
   return (
     <>
-     <div>
+      <div>
         <Card>
           <CardHeader>
             <CardTitle>Update Category </CardTitle>
@@ -44,13 +52,14 @@ function UpdateCategory() {
             <form onSubmit={handleSubmit}>
               <div className="flex">
                 <Input
-                  id="name"
+                  className="me-2"
                   type="text"
-                  placeholder="Category Name"
                   required
                   name="name"
-                  value={inputValues.name || ""}
-                  onChange={handleChange}
+                  value={catName}
+                  onChange={(e) => {
+                    setCatName(e.target.value);
+                  }}
                 />
                 <Button>Update Category</Button>
               </div>

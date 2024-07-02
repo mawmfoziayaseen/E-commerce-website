@@ -25,6 +25,20 @@ export const getAllCategories = createAsyncThunk(
     }
   }
 );
+
+// use this function to get  single category
+export const getSingleCategory = createAsyncThunk(
+  "categories/getSingleCategory",
+  async (slug, thunkAPI) => {
+    try {
+      const respone = await categoriesService.getSingleCat(slug);
+      return respone;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 // use this function to delete categories
 export const deleteCategory = createAsyncThunk(
   "categories/deleteCategory",
@@ -86,7 +100,20 @@ export const categoriesSlice = createSlice({
       .addCase(deleteCategory.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
+      })
+      .addCase( getSingleCategory.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase( getSingleCategory.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.categories = action.payload;
+      })
+      .addCase( getSingleCategory.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
       });
+
   },
 });
 
