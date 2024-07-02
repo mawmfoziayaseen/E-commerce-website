@@ -19,8 +19,10 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.3",
     "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
     "react-router-dom": "^6.23.1",
-    "slugify": "^1.6.6"
+    "slugify": "^1.6.6",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "color": "^4.2.3",

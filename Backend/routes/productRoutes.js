@@ -1,6 +1,6 @@
 import express from "express";
 
-import { isAdmin, isAuthorized } from "../middlewaves/authMiddleware.js";
+import { isAdmin, isAuthorized } from "../middlewares/authMiddleware.js";
 import { addProductsController } from "../controllers/productsController.js";
 
 const productsRouter = express.Router();

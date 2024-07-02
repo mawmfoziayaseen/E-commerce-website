@@ -1,6 +1,6 @@
 import express from 'express';
 import { registerController, loginController, logoutController, allUsersController } from '../controllers/userController.js';
-import { isAdmin, isAuthorized } from '../middlewaves/authMiddleware.js';
+import { isAdmin, isAuthorized } from '../middlewares/authMiddleware.js';
 
 
 
