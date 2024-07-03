@@ -15,6 +15,7 @@ import Contract from "./pages/Contract";
 import Profile from "./pages/Profile";
 import Categories from "./pages/Admin/Categories";
 import UpdateCategory from "./pages/Admin/UpdateCategory";
+import AddProduct from "./pages/Admin/AddProduct";
 
 function App() {
   const location = useLocation();
@@ -37,6 +38,7 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="users" element={<Users />} />
           <Route path="products" element={<Products />} />
+          <Route path="products/add" element={<AddProduct />} />
           <Route path="categories" element={<Categories/>} />
           <Route path="categories/update/:slug" element={<UpdateCategory/>} />
           <Route path="orders" element={<Orders />} />
