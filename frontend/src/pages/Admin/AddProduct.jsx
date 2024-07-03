@@ -9,11 +9,20 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
-import { toast } from "react-toastify";
+import { useEffect, useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
+// import { toast } from "react-toastify";
 
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "@/store/features/auth/authSlice";
+// import { register } from "@/store/features/auth/authSlice";
+import { getAllCategories } from "@/store/features/Categories/CategoriesSlice";
 
 function AddProduct() {
   const [inputValues, setInputValues] = useState({});
@@ -33,24 +42,25 @@ function AddProduct() {
 
   return (
     <>
-      <Card className="w-full max-w-sm">
+      <Card className="w-full">
         <CardHeader>
-          <CardTitle className="text-xl">Sign Up</CardTitle>
+          <CardTitle className="text-xl">Product Details</CardTitle>
           <CardDescription>
-            Enter your information to create an account
+            Enter your information to add a product
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
             <div className="grid gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="full-name">Full Name</Label>
+                <Label htmlFor="title">Full Name</Label>
                 <Input
-                  id="full-name"
-                  placeholder="Full Name"
+                  id="title"
+                  type="text"
+                  placeholder="Enter Product Title"
                   required
-                  name="name"
-                  value={inputValues.name || ""}
+                  name="title"
+                  value={inputValues.title || ""}
                   onChange={handleChange}
                 />
               </div>
@@ -60,13 +70,10 @@ function AddProduct() {
                 className="w-full"
                 disabled={status == "loading" ? true : false}
               >
-                {status == "loading"
-                  ? "Creating Account ....."
-                  : "Create Account"}
+                {status == "loading" ? "Adding Product ....." : "Add Product"}
               </Button>
             </div>
           </form>
-         
         </CardContent>
       </Card>
     </>
