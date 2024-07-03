@@ -17,7 +17,7 @@ const createCategoriesController = async (req, res) => {
         .send({ success: false, message: "Categories already exist" });
     }
 
-    // creating new user
+    // creating new category
     const category = await categoriesModel.create({
       name, // Sumsang Mobile
       slug: slugify(name, {
@@ -42,12 +42,12 @@ const createCategoriesController = async (req, res) => {
 const getAllCategoriesController = async (req, res) => {
   try {
     // basefetching all categories from data
-    const Categories = await categoriesModel.find({});
+    const categories = await categoriesModel.find({});
 
     return res.status(201).send({
       success: true,
       message: "Categories fetched successfully",
-      Categories,
+      categories,
     });
   } catch (error) {
     console.log(`getAllCategoriesController error  ${error}`);

@@ -1,5 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
+// import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea"
+
 import {
   Card,
   CardContent,
@@ -26,19 +28,44 @@ import { getAllCategories } from "@/store/features/Categories/CategoriesSlice";
 
 function AddProduct() {
   const [inputValues, setInputValues] = useState({});
-  const { status } = useSelector((state) => state.auth);
-  const navigate = useNavigate();
+  const authStatus = useSelector((state) => state.auth);
+  const categories = useSelector((state) => state.categories.categories);
+  const status = categories.status;
+  const error = categories.error;
+  console.log(categories);
+  //   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
     setInputValues((values) => ({ ...values, [name]: value }));
   };
+  const handleCategoryChange = (value) => {
+    setInputValues((values) => ({ ...values, category: value }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+    console.log(inputValues);
   };
+  useEffect(() => {
+    dispatch(getAllCategories());
+  }, [dispatch]);
+  if (status == "loading") {
+    return (
+      <div className="flex justify-center items-center h-full">
+        <p>Loading Categories....</p>
+      </div>
+    );
+  }
+
+  if (error == "error") {
+    return (
+      <div className="flex justify-center items-center h-full">
+        <p>Error while fetching Categories....</p>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -50,10 +77,10 @@ function AddProduct() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} encType="multipart/form-data" >
             <div className="grid gap-4">
               <div className="grid gap-2">
-                <Label htmlFor="title">Full Name</Label>
+                <Label htmlFor="title">Title</Label>
                 <Input
                   id="title"
                   type="text"
@@ -64,10 +91,79 @@ function AddProduct() {
                   onChange={handleChange}
                 />
               </div>
-            
+              <div className="grid grid-cols-2 gap-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="title">Price</Label>
+                  <Input
+                    id="price"
+                    type="number"
+                    placeholder="Enter Product price"
+                    required
+                    name="price"
+                    value={inputValues.price || ""}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="category">Category</Label>
+                  <Select onValueChange={handleCategoryChange}>
+                    <SelectTrigger className="">
+                      <SelectValue placeholder="Select Category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories &&
+                        categories.categories &&
+                        categories.categories.map((category) => {
+                          return (
+                            <SelectItem
+                              className="capitalize"
+                              key={category._id}
+                              value={category._id}
+                            >
+                              {category.name}
+                            </SelectItem>
+                          );
+                        })}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="picture">Full Name</Label>
+                <Input
+                  id="picture"
+                  type="file"
+                  placeholder="Enter Product Title"
+                  required
+                  name="picture"
+               
+                  onChange={(e)=>{
+                    handleChange({
+                    target:{
+                      name:"picture",
+                      value:e.target.files[0]
+                      },
+                    }
+                  )}}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="description">Description</Label>
+                <Textarea 
+                id ="description"
+                className="min-h-32"
+                name="description"
+                placeholder="Enter Product Description"
+                value={inputValues.description ||""}
+                onChange={handleChange}
+
+                />
+
+              </div>
+
               <Button
                 type="submit"
-                className="w-full"
+                className="max-w-36"
                 disabled={status == "loading" ? true : false}
               >
                 {status == "loading" ? "Adding Product ....." : "Add Product"}

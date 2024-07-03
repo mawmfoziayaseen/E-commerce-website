@@ -38,7 +38,7 @@ import { useNavigate } from "react-router-dom";
 function Categories() {
   const [inputValues, setInputValues] = useState({});
   const categoriesState = useSelector((state) => state.categories);
-  const categories = categoriesState.categories.Categories; // Corrected access
+  const categories = categoriesState.categories.categories; // Corrected access
   const status = categoriesState.status;
   const error = categoriesState.error;
   const dispatch = useDispatch();
