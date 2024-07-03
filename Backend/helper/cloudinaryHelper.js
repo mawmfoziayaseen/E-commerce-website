@@ -18,7 +18,7 @@ const uploadImageOnCloudinary = async (filePath, folderName) => {
     } catch (error) {
       console.log("failrd to delete image from server", error);
     }
-    console.log(result);
+    // console.log(result);
     return {
       secure_url: result.secure_url,
       public_id: result.public_id,
