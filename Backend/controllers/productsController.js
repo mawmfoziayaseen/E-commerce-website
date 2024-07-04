@@ -44,8 +44,6 @@ const addProductsController = async (req, res) => {
       message: "Product added successfully",
       product,
     });
-
-  
   } catch (error) {
     console.log(`addProductsController error  ${error}`);
     return res.status(400).send({
@@ -56,19 +54,19 @@ const addProductsController = async (req, res) => {
   }
 };
 
-const  getAllProductsController = async (req, res) => {
+const getAllProductsController = async (req, res) => {
   try {
-   
-   
-    const products = await productsModel.find({});
+    const products = await productsModel
+      .find({})
+      .populate("user", "name")
+      .populate("category", "name");
+
     return res.status(201).send({
       success: true,
-      total :products.length,
+      total: products.length,
       message: " All Products added successfully",
       products,
     });
-
-  
   } catch (error) {
     console.log(` getAllProductsController error  ${error}`);
     return res.status(400).send({
@@ -167,8 +165,8 @@ const  getAllProductsController = async (req, res) => {
 
 export {
   addProductsController,
-  getAllProductsController
- 
+  getAllProductsController,
+
   //   deleteCategoriesController,
   //   updateCategoriesController,getsingleCategoriesController
 };
