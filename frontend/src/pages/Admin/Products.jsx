@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import moment from "moment";
 
 import {
   DropdownMenu,
@@ -65,6 +66,7 @@ function Products() {
               <TableHead>Image</TableHead>
               <TableHead>Title</TableHead>
               <TableHead>Description</TableHead>
+              <TableHead>Price</TableHead>
               <TableHead>Category</TableHead>
               <TableHead>Added By</TableHead>
               <TableHead>Date</TableHead>
@@ -86,17 +88,13 @@ function Products() {
                         {product.title}
                       </TableCell>
                       <TableCell className="font-medium">{product.description}</TableCell>
+                      <TableCell className="font-medium">{product.price}</TableCell>
+                      <TableCell className="font-medium">{product.category.name}</TableCell>
+                      <TableCell className="font-medium">{product.user.name}</TableCell>
+                      <TableCell className="font-medium">{moment(product.createdAt).format("DD-MM-YYYY")}</TableCell>
+                  
                       
-                      <TableCell>
-                        <Badge variant="outline">Draft</Badge>
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        $499.99
-                      </TableCell>
-                      <TableCell className="hidden md:table-cell">25</TableCell>
-                      <TableCell className="hidden md:table-cell">
-                        2023-07-12 10:42 AM
-                      </TableCell>
+                   
                       <TableCell>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
