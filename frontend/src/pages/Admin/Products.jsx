@@ -72,45 +72,54 @@ function Products() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow >
-              <TableCell></TableCell>
-              <TableCell>
-                <Image
-                  alt="Product image"
-                  className="aspect-square rounded-md object-cover"
-                  height="64"
-                  src="/placeholder.svg"
-                  width="64"
-                />
-              </TableCell>
-              <TableCell className="font-medium">
-                Laser Lemonade Machine
-              </TableCell>
-              <TableCell>
-                <Badge variant="outline">Draft</Badge>
-              </TableCell>
-              <TableCell className="hidden md:table-cell">$499.99</TableCell>
-              <TableCell className="hidden md:table-cell">25</TableCell>
-              <TableCell className="hidden md:table-cell">
-                2023-07-12 10:42 AM
-              </TableCell>
-              <TableCell>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button aria-haspopup="true" size="icon" variant="ghost">
-                      <MoreHorizontal className="h-4 w-4" />
-                      <span className="sr-only">Toggle menu</span>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                    <DropdownMenuItem>Edit</DropdownMenuItem>
-                    <DropdownMenuItem>Delete</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
-         
+            {products &&
+              products.products &&
+              products.products.map((product, index) => {
+                return (
+                  <>
+                    <TableRow key={product._id}>
+                      <TableCell>{index + 1}</TableCell>
+                      <TableCell>
+                       <img src={product.picture.secure_url} height="50px" width="50px" />
+                      </TableCell>
+                      <TableCell className="font-medium">
+                        {product.title}
+                      </TableCell>
+                      <TableCell className="font-medium">{product.description}</TableCell>
+                      
+                      <TableCell>
+                        <Badge variant="outline">Draft</Badge>
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell">
+                        $499.99
+                      </TableCell>
+                      <TableCell className="hidden md:table-cell">25</TableCell>
+                      <TableCell className="hidden md:table-cell">
+                        2023-07-12 10:42 AM
+                      </TableCell>
+                      <TableCell>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button
+                              aria-haspopup="true"
+                              size="icon"
+                              variant="ghost"
+                            >
+                              <MoreHorizontal className="h-4 w-4" />
+                              <span className="sr-only">Toggle menu</span>
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuItem>Edit</DropdownMenuItem>
+                            <DropdownMenuItem>Delete</DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </TableCell>
+                    </TableRow>
+                  </>
+                );
+              })}
           </TableBody>
         </Table>
       </div>
