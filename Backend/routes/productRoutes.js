@@ -1,7 +1,7 @@
 import express from "express";
 
 import { isAdmin, isAuthorized } from "../middlewares/authMiddleware.js";
-import { addProductsController, getAllProductsController } from "../controllers/productsController.js";
+import { addProductsController, deleteProductController,  getAllProductsController } from "../controllers/productsController.js";
 import { upload } from "../middlewares/multerMiddleware.js";
 
 const productsRouter = express.Router();
@@ -28,13 +28,13 @@ productsRouter.post(
 );
 
 // delete Routes of Products
-// http://localhost:8080/api/v1/Products/:slug -->Delete
-// productsRouter .delete(
-//   "/:slug",
-//   isAuthorized,
-//   isAdmin,
-//   deleteProductsController
-// );
+// http://localhost:8080/api/v1/Products_id -->Delete
+productsRouter .delete(
+  "/:productId",
+  isAuthorized,
+  isAdmin,
+  deleteProductController
+);
 
 // update Routes of Products
 // http://localhost:8080/api/v1/Products/:slug -->Put
