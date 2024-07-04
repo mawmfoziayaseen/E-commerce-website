@@ -4,11 +4,12 @@ import productService from "./productService.js";
 
 // use this function to register page
 export const addProduct = createAsyncThunk(
-    "categories/AddCategory",
+    "categories/addProduct",
     async (inputValues, thunkAPI) => {
       try {
         const respone = await productService.createProduct(inputValues);
         return respone;
+        console.log(respone);
       } catch (error) {
         return thunkAPI.rejectWithValue(error);
       }

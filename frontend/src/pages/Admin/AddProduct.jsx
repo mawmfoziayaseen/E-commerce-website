@@ -1,4 +1,4 @@
-// import { Link, useNavigate } from "react-router-dom";
+
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea"
 
@@ -20,20 +20,23 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 import { useDispatch, useSelector } from "react-redux";
-// import { register } from "@/store/features/auth/authSlice";
+
 import { getAllCategories } from "@/store/features/Categories/CategoriesSlice";
+import { addProduct } from "@/store/features/products/productSlice";
+import { useNavigate } from "react-router-dom";
 
 function AddProduct() {
   const [inputValues, setInputValues] = useState({});
   const authStatus = useSelector((state) => state.auth);
   const categories = useSelector((state) => state.categories.categories);
-  const status = categories.status;
-  const error = categories.error;
+  const status = useSelector((state) => state.categories.status);
+  const productStatus = useSelector((state) => state.products.status);
+  const error = useSelector((state) => state.categories.error);
   console.log(categories);
-  //   const navigate = useNavigate();
+    const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleChange = (e) => {
     const name = e.target.name;
@@ -47,6 +50,26 @@ function AddProduct() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(inputValues);
+    dispatch(addProduct(inputValues))
+    .unwrap()
+    .then((response) => {
+      if (response?.success == true) {
+
+        toast.success(response?.message, { autoClose: 2000 });
+        // setInputValues(null);
+        setTimeout(() => {
+          navigate("/admin/products");
+        }, 2000);
+      } else {
+        toast.error(response?.message, { autoClose: 2000 });
+
+      }
+
+    })
+    .catch((error) => {
+      toast.error(error, { autoClose: 2000 });
+    })
+  
   };
   useEffect(() => {
     dispatch(getAllCategories());
@@ -164,9 +187,9 @@ function AddProduct() {
               <Button
                 type="submit"
                 className="max-w-36"
-                disabled={status == "loading" ? true : false}
+                disabled={productStatus  == "loading" ? true : false}
               >
-                {status == "loading" ? "Adding Product ....." : "Add Product"}
+                {productStatus == "loading" ? "Adding Product ....." : "Add Product"}
               </Button>
             </div>
           </form>
