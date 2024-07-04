@@ -15,7 +15,18 @@ export const addProduct = createAsyncThunk(
       }
     }
   );
-
+// use this function to get Products
+export const getAllProducts = createAsyncThunk(
+  "products/getAllProducts",
+  async (thunkAPI) => {
+    try {
+      const respone = await productService.getAllProd();
+      return respone;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
   const initialState = {
     products: [],
@@ -38,6 +49,18 @@ export const addProduct = createAsyncThunk(
           state.products = action.payload;
         })
         .addCase(addProduct.rejected, (state, action) => {
+          state.status = "failed";
+          state.error = action.payload;
+        })
+        .addCase(getAllProducts.pending, (state) => {
+          state.status = "loading";
+          state.error = null;
+        })
+        .addCase(getAllProducts.fulfilled, (state, action) => {
+          state.status = "succeeded";
+          state.products = action.payload;
+        })
+        .addCase(getAllProducts.rejected, (state, action) => {
           state.status = "failed";
           state.error = action.payload;
         });

@@ -24,7 +24,7 @@ const addProductsController = async (req, res) => {
     // uploadin image on server
     const { secure_url, public_id } = await uploadImageOnCloudinary(
       picturePath,
-      "products"
+      "product"
     );
     if (!secure_url) {
       return res.status(400).send({

@@ -24,6 +24,31 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 function Products() {
+  const products = useSelector((state) => state.products.products);
+  const status = useSelector((state) => state.products.status);
+  const error = useSelector((state) => state.products.error);
+  const dispatch = useDispatch();
+
+  // this is use Effect
+  useEffect(() => {
+    dispatch(getAllProducts()); // get all product function
+  }, [dispatch]);
+  if (status == "loading") {
+    return (
+      <div className="flex justify-center items-center h-full">
+        <p>Loading Products....</p>
+      </div>
+    );
+  }
+
+  if (error == "error") {
+    return (
+      <div className="flex justify-center items-center h-full">
+        <p>Error while fetching Products....</p>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="flex justify-between items-center">
@@ -36,6 +61,7 @@ function Products() {
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead>Sr. No.</TableHead>
               <TableHead>Image</TableHead>
               <TableHead>Title</TableHead>
               <TableHead>Description</TableHead>
@@ -43,12 +69,12 @@ function Products() {
               <TableHead>Added By</TableHead>
               <TableHead>Date</TableHead>
               <TableHead>Action</TableHead>
-              
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell className="hidden sm:table-cell">
+            <TableRow >
+              <TableCell></TableCell>
+              <TableCell>
                 <Image
                   alt="Product image"
                   className="aspect-square rounded-md object-cover"

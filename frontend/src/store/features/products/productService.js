@@ -21,10 +21,31 @@ const createProduct = async (inputValues) => {
     }
   };
 
+  //Get all Products
+const getAllProd = async () => {
+  try {
+    const axiosRespone = await axios.get(
+      `${import.meta.env.VITE_BASE_URL}/products`,
+      {
+        withCredentials: true, //axios send automatically cookies when we apply this property
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    return axiosRespone.data;
+  } catch (error) {
+    const errorMessage =
+      error.respone?.data?.message ||
+      error.message ||
+      "something went wrong please try again";
+    return Promise.reject(errorMessage);
+  }
+};
+
   
 const productServices = {
    
     createProduct,
+    getAllProd ,
   };
   
   export default productServices;
