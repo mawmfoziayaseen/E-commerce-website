@@ -16,7 +16,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { getAllProducts } from "@/store/features/products/productSlice";
 import { Image, MoreHorizontal } from "lucide-react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Link } from "react-router-dom";
 
@@ -81,49 +84,7 @@ function Products() {
                 </DropdownMenu>
               </TableCell>
             </TableRow>
-            {/* <TableRow>
-                  <TableCell className="hidden sm:table-cell">
-                    <Image
-                      alt="Product image"
-                      className="aspect-square rounded-md object-cover"
-                      height="64"
-                      src="/placeholder.svg"
-                      width="64"
-                    />
-                  </TableCell>
-                  <TableCell className="font-medium">
-                    Hypernova Headphones
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant="outline">Active</Badge>
-                  </TableCell>
-                  <TableCell className="hidden md:table-cell">
-                    $129.99
-                  </TableCell>
-                  <TableCell className="hidden md:table-cell">100</TableCell>
-                  <TableCell className="hidden md:table-cell">
-                    2023-10-18 03:21 PM
-                  </TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          aria-haspopup="true"
-                          size="icon"
-                          variant="ghost"
-                        >
-                          <MoreHorizontal className="h-4 w-4" />
-                          <span className="sr-only">Toggle menu</span>
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem>Edit</DropdownMenuItem>
-                        <DropdownMenuItem>Delete</DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow> */}
+         
           </TableBody>
         </Table>
       </div>
