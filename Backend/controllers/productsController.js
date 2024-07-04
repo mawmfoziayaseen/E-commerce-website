@@ -55,25 +55,30 @@ const addProductsController = async (req, res) => {
     });
   }
 };
-// const getAllCategoriesController = async (req, res) => {
-//   try {
-//     // basefetching all categories from data
-//     const Categories = await categoriesModel.find({});
 
-//     return res.status(201).send({
-//       success: true,
-//       message: "Categories fetched successfully",
-//       Categories,
-//     });
-//   } catch (error) {
-//     console.log(`getAllCategoriesController error  ${error}`);
-//     return res.status(400).send({
-//       success: false,
-//       message: "getAllCategoriesController error",
-//       error,
-//     });
-//   }
-// };
+const  getAllProductsController = async (req, res) => {
+  try {
+   
+   
+    const products = await productsModel.find({});
+    return res.status(201).send({
+      success: true,
+      total :products.length,
+      message: " All Products added successfully",
+      products,
+    });
+
+  
+  } catch (error) {
+    console.log(` getAllProductsController error  ${error}`);
+    return res.status(400).send({
+      success: false,
+      message: "error in  getAllProductsController ",
+      error,
+    });
+  }
+};
+
 // const deleteCategoriesController = async (req, res) => {
 //   try {
 //     const { slug } = req.params;
@@ -162,7 +167,8 @@ const addProductsController = async (req, res) => {
 
 export {
   addProductsController,
-  //   getAllCategoriesController,
+  getAllProductsController
+ 
   //   deleteCategoriesController,
   //   updateCategoriesController,getsingleCategoriesController
 };

@@ -1,13 +1,20 @@
 import express from "express";
 
 import { isAdmin, isAuthorized } from "../middlewares/authMiddleware.js";
-import { addProductsController } from "../controllers/productsController.js";
+import { addProductsController, getAllProductsController } from "../controllers/productsController.js";
 import { upload } from "../middlewares/multerMiddleware.js";
 
 const productsRouter = express.Router();
 
 // http://localhost:8080/api/v1/Products-->get
 // productsRouter .get("/", getAllProductsController);
+
+productsRouter.get(
+  "/",
+ 
+  getAllProductsController
+);
+
 
 // http://localhost:8080/api/v1/Products-->POST
 
