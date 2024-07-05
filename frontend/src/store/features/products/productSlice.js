@@ -61,7 +61,6 @@ export const updateSingleProduct = createAsyncThunk(
         productId,
       });
       return respone;
-     
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -112,6 +111,30 @@ export const productsSlice = createSlice({
         state.products = action.payload;
       })
       .addCase(deleteProduct.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      .addCase(getSingleProduct.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(getSingleProduct.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.products = action.payload;
+      })
+      .addCase(getSingleProduct.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      .addCase(updateSingleProduct.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(updateSingleProduct.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.products = action.payload;
+      })
+      .addCase(updateSingleProduct.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });

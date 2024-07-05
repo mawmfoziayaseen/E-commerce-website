@@ -125,7 +125,7 @@ const getsingleProductsController = async (req, res) => {
     }
     return res.status(200).send({
       success: true,
-      message: "  Product dettail fetched successfully",
+      message: "  Product detail fetched successfully",
     });
   } catch (error) {
     console.log(` getsingleProductsController  error  ${error}`);
