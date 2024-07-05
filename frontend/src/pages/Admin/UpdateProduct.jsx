@@ -26,6 +26,11 @@ function UpdateProduct() {
     description: "",
   });
   const categories = useSelector((state) => state.categories.categories);
+  const catStatus = useSelector((state) => state.categories.status);
+  const catError = useSelector((state) => state.categories.error);
+  const products = useSelector((state) => state.categories.categories);
+  const prodStatus = useSelector((state) => state.categories.status);
+  const prodError = useSelector((state) => state.categories.error);
   const dispatch = useDispatch();
   const { productId } = useParams();
 
@@ -43,6 +48,39 @@ function UpdateProduct() {
     dispatch(getSingleProduct(productId));
     dispatch(getAllCategories());
   }, [productId, dispatch]);
+
+
+  useEffect(()=>{
+    if(products && products.product){
+      const { title,price, category,picture,description}= products.product;
+      setInputValues({
+        title:title,
+        price:price,
+        category:category,
+        picture:picture.secure_url,
+        description:description,
+      })
+    }
+  },[])
+
+  if(catStatus == "loading" || prodStatus == "loading"){
+    return(
+      <div className="flex justify-center items-center h-screen">
+      <p>Loading...</p>
+    </div>
+    )
+    
+  }
+  if(catError == "failed" || prodError == "failed"){
+    return(
+      <div className="flex justify-center items-center h-screen">
+      <p>Error....</p>
+    </div>
+    )
+    
+  }
+  
+
 
   return (
     <>
