@@ -63,7 +63,7 @@ function AddProduct() {
       } else {
         toast.error(response?.message, { autoClose: 2000 });
 
-      }
+      };
 
     })
     .catch((error) => {

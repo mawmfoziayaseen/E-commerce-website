@@ -9,13 +9,23 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { getAllCategories } from "@/store/features/Categories/CategoriesSlice";
-import { getSingleProduct } from "@/store/features/products/productSlice";
+import {
+  getSingleProduct,
+  updateSingleProduct,
+} from "@/store/features/products/productSlice";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function UpdateProduct() {
   const [inputValues, setInputValues] = useState({
@@ -25,23 +35,44 @@ function UpdateProduct() {
     picture: "",
     description: "",
   });
+  const [prevPic, setPrevPic] = useState("");
   const categories = useSelector((state) => state.categories.categories);
   const catStatus = useSelector((state) => state.categories.status);
   const catError = useSelector((state) => state.categories.error);
-  const products = useSelector((state) => state.categories.categories);
-  const prodStatus = useSelector((state) => state.categories.status);
-  const prodError = useSelector((state) => state.categories.error);
+  const products = useSelector((state) => state.products.products);
+  const prodStatus = useSelector((state) => state.products.status);
+  const prodError = useSelector((state) => state.products.error);
   const dispatch = useDispatch();
   const { productId } = useParams();
+  const navigate = useNavigate();
 
   // handlechange function
   const handleChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setInputValues((values) => ({ ...values, [name]: value }));
+    const { name, value, type, file } = e.target;
+    setInputValues((values) => ({
+      ...values,
+      [name]: type === "file" ? file[0] : value,
+    }));
   };
   const handleCategoryChange = (value) => {
     setInputValues((values) => ({ ...values, category: value }));
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(inputValues);
+    dispatch(updateSingleProduct({ inputValues, productId }))
+      .unwrap()
+      .then((response) => {
+        if (response?.success == true) {
+          toast.success(response?.message, { autoClose: 2000 });
+          navigate("/admin/products");
+        } else {
+          toast.error(response?.message, { autoClose: 2000 });
+        }
+      })
+      .catch((error) => {
+        toast.error(error, { autoClose: 2000 });
+      });
   };
 
   useEffect(() => {
@@ -49,38 +80,35 @@ function UpdateProduct() {
     dispatch(getAllCategories());
   }, [productId, dispatch]);
 
-
-  useEffect(()=>{
-    if(products && products.product){
-      const { title,price, category,picture,description}= products.product;
+  useEffect(() => {
+    if (products && products.product) {
+      const { title, price, category, picture, description } = products.product;
       setInputValues({
-        title:title,
-        price:price,
-        category:category,
-        picture:picture.secure_url,
-        description:description,
-      })
+        title: title,
+        price: price,
+        category: category._id,
+        picture: picture.secure_url,
+        description: description,
+      });
+      setPrevPic(picture.secure_url);
     }
-  },[])
+  }, []);
 
-  if(catStatus == "loading" || prodStatus == "loading"){
-    return(
+  if (catStatus == "loading" || prodStatus == "loading") {
+    return (
       <div className="flex justify-center items-center h-screen">
-      <p>Loading...</p>
-    </div>
-    )
-    
+        <p>Loading...</p>
+      </div>
+    );
   }
-  if(catError == "failed" || prodError == "failed"){
-    return(
+  if (catError == "failed" || prodError == "failed") {
+    return (
       <div className="flex justify-center items-center h-screen">
-      <p>Error....</p>
-    </div>
-    )
-    
+        <p>Error....</p>
+      </div>
+    );
   }
-  
-
+ 
 
   return (
     <>
@@ -92,7 +120,7 @@ function UpdateProduct() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form encType="multipart/form-data">
+          <form encType="multipart/form-data" on onSubmit={handleSubmit}>
             <div className="grid gap-6">
               <div className="grid gap-3">
                 <Label htmlFor="title">Title</Label>
@@ -121,7 +149,10 @@ function UpdateProduct() {
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="category">Category</Label>
-                  <Select onValueChange={handleCategoryChange}>
+                  <Select
+                    value={inputValues.category}
+                    onValueChange={handleCategoryChange}
+                  >
                     <SelectTrigger className="">
                       <SelectValue placeholder="Select Category" />
                     </SelectTrigger>
@@ -151,7 +182,6 @@ function UpdateProduct() {
                     id="picture"
                     placeholder="Enter Product picture"
                     required
-                    value={inputValues.picture}
                     onChange={(e) => {
                       handleChange({
                         target: {
@@ -164,15 +194,20 @@ function UpdateProduct() {
                 </div>
                 <div className="grid gap-3">
                   <Label>Previous Picture</Label>
-                  <Input type="text" required placeholder="Previous Picture" />
+                  <img
+                    src={prevPic}
+                    height={70}
+                    width={70}
+                    alt={inputValues.title}
+                  />
                 </div>
               </div>
               <div className="grid gap-4">
                 <Label htmlFor="description">Description</Label>
                 <Textarea
                   id="description"
-                 placeholder="Enter Product description"
-                 className="min-h-32"
+                  placeholder="Enter Product description"
+                  className="min-h-32"
                   required
                   name="description"
                   value={inputValues.description}
@@ -180,7 +215,8 @@ function UpdateProduct() {
                 />
               </div>
               <div className="">
-               <Button type="submit">Update Product</Button>
+                <Button type="submit">Update Product</Button>
+               
               </div>
             </div>
           </form>
