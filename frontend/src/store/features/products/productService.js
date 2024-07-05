@@ -41,11 +41,32 @@ const getAllProd = async () => {
   }
 };
 
+// delete Product
+const deleteProd = async (productId) => {
+  try {
+    const axiosRespone = await axios.delete(
+      `${import.meta.env.VITE_BASE_URL}/products/${productId}`,
+      {
+        withCredentials: true, //axios send automatically cookies when we apply this property
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    return axiosRespone.data;
+  } catch (error) {
+    const errorMessage =
+      error.respone?.data?.message ||
+      error.message ||
+      "something went wrong please try again";
+    return Promise.reject(errorMessage);
+  }
+};
+
   
 const productServices = {
    
     createProduct,
     getAllProd ,
+    deleteProd,
   };
   
   export default productServices;

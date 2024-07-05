@@ -17,18 +17,38 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getAllProducts } from "@/store/features/products/productSlice";
+import { deleteProduct, getAllProducts } from "@/store/features/products/productSlice";
 import { Image, MoreHorizontal } from "lucide-react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { deleteCategory, getAllCategories } from "@/store/features/Categories/CategoriesSlice";
 
 function Products() {
   const products = useSelector((state) => state.products.products);
   const status = useSelector((state) => state.products.status);
   const error = useSelector((state) => state.products.error);
   const dispatch = useDispatch();
+
+
+  const handleDelete = (productId) => {
+    dispatch(deleteProduct(productId))
+    .unwrap()
+    .then((response) => {
+      if (response?.success == true) {
+        toast.success(response?.message, { autoClose: 2000 });
+      
+        dispatch(getAllProducts());
+      } else {
+        toast.error(response?.message, { autoClose: 2000 });
+      }
+    })
+    .catch((error) => {
+      toast.error(error, { autoClose: 2000 });
+    });
+  }
 
   // this is use Effect
   useEffect(() => {
@@ -82,19 +102,31 @@ function Products() {
                     <TableRow key={product._id}>
                       <TableCell>{index + 1}</TableCell>
                       <TableCell>
-                       <img src={product.picture.secure_url} height="50px" width="50px" />
+                        <img
+                          src={product.picture.secure_url}
+                          height="50px"
+                          width="50px"
+                        />
                       </TableCell>
                       <TableCell className="font-medium">
                         {product.title}
                       </TableCell>
-                      <TableCell className="font-medium">{product.description}</TableCell>
-                      <TableCell className="font-medium">{product.price}</TableCell>
-                      <TableCell className="font-medium">{product.category.name}</TableCell>
-                      <TableCell className="font-medium">{product.user.name}</TableCell>
-                      <TableCell className="font-medium">{moment(product.createdAt).format("DD-MM-YYYY")}</TableCell>
-                  
-                      
-                   
+                      <TableCell className="font-medium">
+                        {product.description}
+                      </TableCell>
+                      <TableCell className="font-medium">
+                        {product.price}
+                      </TableCell>
+                      <TableCell className="font-medium">
+                        {product.category.name}
+                      </TableCell>
+                      <TableCell className="font-medium">
+                        {product.user.name}
+                      </TableCell>
+                      <TableCell className="font-medium">
+                        {moment(product.createdAt).format("DD-MM-YYYY")}
+                      </TableCell>
+
                       <TableCell>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
@@ -110,7 +142,15 @@ function Products() {
                           <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
                             <DropdownMenuItem>Edit</DropdownMenuItem>
-                            <DropdownMenuItem>Delete</DropdownMenuItem>
+                            <DropdownMenuItem>
+                              <button
+                                onClick={() => {
+                                  handleDelete(product._id);
+                                }}
+                              >
+                                Delete
+                              </button>
+                            </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
                       </TableCell>
