@@ -22,7 +22,7 @@ import { Image, MoreHorizontal } from "lucide-react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { deleteCategory, getAllCategories } from "@/store/features/Categories/CategoriesSlice";
 
@@ -31,6 +31,7 @@ function Products() {
   const status = useSelector((state) => state.products.status);
   const error = useSelector((state) => state.products.error);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
 
   const handleDelete = (productId) => {
@@ -141,7 +142,15 @@ function Products() {
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuItem>Edit</DropdownMenuItem>
+                            <DropdownMenuItem>
+                            <button
+                                onClick={() => {
+                                 navigate(`/admin/products/update/${product._id}`)
+                                }}
+                              >
+                                Edit
+                              </button>
+                            </DropdownMenuItem>
                             <DropdownMenuItem>
                               <button
                                 onClick={() => {

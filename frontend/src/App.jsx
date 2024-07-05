@@ -1,6 +1,6 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import RegisterPage from "./pages/RegisterPage";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import DashboardLayout from "./pages/Admin/DashboardLayout";
@@ -16,13 +16,13 @@ import Profile from "./pages/Profile";
 import Categories from "./pages/Admin/Categories";
 import UpdateCategory from "./pages/Admin/UpdateCategory";
 import AddProduct from "./pages/Admin/AddProduct";
+import UpdateProduct from "./pages/Admin/UpdateProduct";
 
 function App() {
   const location = useLocation();
   const isAdmin = location.pathname.startsWith("/admin");
   return (
     <>
-
       {!isAdmin && <Navbar />}
 
       <Routes>
@@ -39,13 +39,16 @@ function App() {
           <Route path="users" element={<Users />} />
           <Route path="products" element={<Products />} />
           <Route path="products/add" element={<AddProduct />} />
-          <Route path="categories" element={<Categories/>} />
-          <Route path="categories/update/:slug" element={<UpdateCategory/>} />
+          <Route path="categories" element={<Categories />} />
+          <Route path="categories/update/:slug" element={<UpdateCategory />} />
+          <Route
+            path="products/update/:productId"
+            element={<UpdateProduct />}
+          />
           <Route path="orders" element={<Orders />} />
         </Route>
       </Routes>
       <ToastContainer />
-
     </>
   );
 }

@@ -3,7 +3,7 @@ import productService from "./productService.js";
 
 // use this function in products
 export const addProduct = createAsyncThunk(
-  "categories/addProduct",
+  "products/addProduct",
   async (inputValues, thunkAPI) => {
     try {
       const respone = await productService.createProduct(inputValues);
@@ -38,7 +38,35 @@ export const deleteProduct = createAsyncThunk(
     }
   }
 );
+// use this function to delete products
+export const getSingleProduct = createAsyncThunk(
+  "products/getSingleProduct ",
+  async (productId, thunkAPI) => {
+    try {
+      const respone = await productService.getSingleProd(productId);
+      return respone;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 
+// use this function in  update singleproducts
+export const updateSingleProduct = createAsyncThunk(
+  "products/updateSingleProduct",
+  async ({ inputValues, productId }, thunkAPI) => {
+    try {
+      const respone = await productService.updateProd({
+        inputValues,
+        productId,
+      });
+      return respone;
+     
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 const initialState = {
   products: [],
   status: "idle",
