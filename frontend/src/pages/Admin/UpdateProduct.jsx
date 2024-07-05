@@ -9,11 +9,12 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { getAllCategories } from "@/store/features/Categories/CategoriesSlice";
 import { getSingleProduct } from "@/store/features/products/productSlice";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 function UpdateProduct() {
@@ -24,11 +25,19 @@ function UpdateProduct() {
     picture: "",
     description: "",
   });
+  const categories = useSelector((state) => state.categories.categories);
   const dispatch = useDispatch();
   const { productId } = useParams();
 
   // handlechange function
-  const handleChange = () => {};
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setInputValues((values) => ({ ...values, [name]: value }));
+  };
+  const handleCategoryChange = (value) => {
+    setInputValues((values) => ({ ...values, category: value }));
+  };
 
   useEffect(() => {
     dispatch(getSingleProduct(productId));
@@ -74,14 +83,26 @@ function UpdateProduct() {
                 </div>
                 <div className="grid gap-3">
                   <Label htmlFor="category">Category</Label>
-                  <Input
-                    id="category"
-                    type="text"
-                    required
-                    name="category"
-                    value={inputValues.category}
-                    onChange={handleChange}
-                  />
+                  <Select onValueChange={handleCategoryChange}>
+                    <SelectTrigger className="">
+                      <SelectValue placeholder="Select Category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categories &&
+                        categories.categories &&
+                        categories.categories.map((category) => {
+                          return (
+                            <SelectItem
+                              className="capitalize"
+                              key={category._id}
+                              value={category._id}
+                            >
+                              {category.name}
+                            </SelectItem>
+                          );
+                        })}
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
