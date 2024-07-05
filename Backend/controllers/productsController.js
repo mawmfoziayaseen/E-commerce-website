@@ -81,6 +81,88 @@ const getAllProductsController = async (req, res) => {
     });
   }
 };
+
+const updateSingleProductsController = async (req, res) => {
+  try {
+    const { productId } = req.params;
+    const { title, description, category, price } = req.body;
+
+    const picturePath = req.file?.path;
+
+    const product = await productsModel.findById(productId);
+    if (!product) {
+      return res.status(404).send({
+        success: false,
+        message: "Product not found",
+      });
+    }
+    if (title) product.title = title;
+    if (description) product.description = description;
+    if (category) product.category = category;
+    if (price) product.price = price;
+
+    // code of upload new image
+    if (picturePath) {
+      const { secure_url, public_id } = await uploadImageOnCloudinary(
+        picturePath,
+        "products"
+      );
+
+      // delete product image from cloudinary  or  delete previous image on code
+      if (product.picture && product.picture.public_id) {
+        await deleteImageOnCloudinary(product.picture.public_id);
+      }
+
+      product.picture = {
+        secure_url,
+        public_id
+      };
+    }
+    await product.save();
+    return res
+      .status(200)
+      .send({
+        success: true,
+        message: "product detail updated successfully",
+        product,
+      });
+  } catch (error) {
+    console.log(`  updateSingleProductsController  error  ${error}`);
+    return res.status(400).send({
+      success: false,
+      message: "error in   updateSingleProductsController",
+      error,
+    });
+  }
+};
+
+const getsingleProductsController = async (req, res) => {
+  try {
+    const { productId } = req.params;
+    const product = await productsModel
+      .findById(productId)
+      .populate("user", "name")
+      .populate("category", "name");
+    if (!product) {
+      return res.status(404).send({
+        success: false,
+        message: "Product not found",
+      });
+    }
+    return res.status(200).send({
+      success: true,
+      message: "  Product details fetched successfully",
+      product,
+    });
+  } catch (error) {
+    console.log(` getsingleProductsController  error  ${error}`);
+    return res.status(400).send({
+      success: false,
+      message: "error in  getsingleProductsController",
+      error,
+    });
+  }
+};
 const deleteProductController = async (req, res) => {
   try {
     const { productId } = req.params;
@@ -110,83 +192,6 @@ const deleteProductController = async (req, res) => {
   }
 };
 
-const getsingleProductsController = async (req, res) => {
-  try {
-    const { productId } = req.params;
-    const product = await productsModel
-      .findById(productId)
-      .populate("user", "name")
-      .populate("category", "name");
-    if (!product) {
-      return res.status(404).send({
-        success: false,
-        message: "Product not found",
-      });
-    }
-    return res.status(200).send({
-      success: true,
-      message: "  Product detail fetched successfully",
-    });
-  } catch (error) {
-    console.log(` getsingleProductsController  error  ${error}`);
-    return res.status(400).send({
-      success: false,
-      message: "error in  getsingleProductsController",
-      error,
-    });
-  }
-};
-
-const updateSingleProductsController = async (req, res) => {
-  try {
-    const { productId } = req.params;
-    const { title, description, category, price } = req.body;
-    
-    const picturePath = req.file?.path;
-
-    const product = await productsModel.findById(productId);
-    if (!product) {
-      return res.status(404).send({
-        success: false,
-        message: "Product not found",
-      });
-    }
-    if (title) product.title = title;
-    if (description) product.description = description;
-    if (category) product.category = category;
-    if (price) product.price = price;
-
-    // code of upload new image
-    if (picturePath) {
-      const { secure_url, public_id } = await uploadImageOnCloudinary(
-        picturePath,
-        "products"
-      );
-
-      // delete product image from cloudinary
-      if (product.picture && product.picture.public_id) {
-        await deleteImageOnCloudinary(product.picture.public_id);
-      }
-
-      product.picture = {
-        secure_url,
-        public_id
-      }
-    }
-    await product.save();
-    return res.status(200).send({success:true,
-      message:"product detail updated successfully",
-      product,
-    })
-  } catch (error) {
-    console.log(`  updateSingleProductsController  error  ${error}`);
-    return res.status(400).send({
-      success: false,
-      message: "error in   updateSingleProductsController",
-      error,
-    });
-  }
-};
 
 export {
   addProductsController,

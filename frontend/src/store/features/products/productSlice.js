@@ -45,6 +45,7 @@ export const getSingleProduct = createAsyncThunk(
     try {
       const respone = await productService.getSingleProd(productId);
       return respone;
+     
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -61,6 +62,7 @@ export const updateSingleProduct = createAsyncThunk(
         productId,
       });
       return respone;
+      console.log(respone);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
