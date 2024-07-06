@@ -99,7 +99,7 @@ function Products() {
               products.products &&
               products.products.map((product, index) => {
                 return (
-                  <>
+                  
                     <TableRow key={product._id}>
                       <TableCell>{index + 1}</TableCell>
                       <TableCell>
@@ -145,7 +145,7 @@ function Products() {
                             <DropdownMenuItem>
                             <button
                                 onClick={() => {
-                                 navigate(`/admin/products/update/${product._id}`)
+                                 navigate(`/admin/products/update/${product._id}`);
                                 }}
                               >
                                 Edit
@@ -164,7 +164,7 @@ function Products() {
                         </DropdownMenu>
                       </TableCell>
                     </TableRow>
-                  </>
+                  
                 );
               })}
           </TableBody>

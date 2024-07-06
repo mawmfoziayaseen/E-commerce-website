@@ -80,7 +80,7 @@ const getSingleProd = async (productId) => {
   }
 };
 
-// update product
+// update single product
 const updateProd = async ({inputValues,productId}) => {
   try {
     const axiosRespone = await axios.put(

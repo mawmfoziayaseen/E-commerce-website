@@ -92,7 +92,7 @@ function UpdateProduct() {
       });
       setPrevPic(picture.secure_url);
     }
-  }, []);
+  }, [products]);
 
   if (catStatus == "loading" || prodStatus == "loading") {
     return (
@@ -108,7 +108,6 @@ function UpdateProduct() {
       </div>
     );
   }
- 
 
   return (
     <>
@@ -216,7 +215,6 @@ function UpdateProduct() {
               </div>
               <div className="">
                 <Button type="submit">Update Product</Button>
-               
               </div>
             </div>
           </form>
