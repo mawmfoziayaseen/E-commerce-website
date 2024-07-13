@@ -24,7 +24,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { deleteCategory, getAllCategories } from "@/store/features/Categories/CategoriesSlice";
+import formatNumber from "format-number";
+// import { deleteCategory, getAllCategories } from "@/store/features/Categories/CategoriesSlice";
 
 function Products() {
   const products = useSelector((state) => state.products.products);
@@ -116,7 +117,7 @@ function Products() {
                         {product.description}
                       </TableCell>
                       <TableCell className="font-medium">
-                        {product.price}
+                        {formatNumber({prefix: 'PKR ', suffix: ''})(product.price) }
                       </TableCell>
                       <TableCell className="font-medium">
                         {product.category.name}
