@@ -33,7 +33,7 @@ function Shop() {
   }
   return (
     <div className="container py-5">
-      <h1 className="text-3xl font-semibold text-center py-4">
+      <h1 className="text-3xl font-semibold text-center py-7">
         {" "}
         Latest
         <span className="text-orange-400">Houses</span>

@@ -4,7 +4,7 @@ import formatNumber from 'format-number';
 
 function ProductCard({product}) {
   return (
-    <Link>
+    <Link to={`/product/${product._id}`}>
       <Card className="rounded-lg shadow w-full">
         <CardContent className="grid gap-3">
           <img
@@ -17,11 +17,11 @@ function ProductCard({product}) {
               {product.title}
             </h5>
             <div className="flex justify-between items-center">
-              <span className="text-2xl font-semibold text-gray-900" > 
-                {formatNumber() (product.price)}
-                <span style={{fontSize:"16px"}}>PKR</span>
+              <span className="text-xl font-semibold text-gray-900" > 
+                {formatNumber() (product.price)}/
+                <span style={{fontSize:"14px"}}>PKR</span>
                 </span>
-                <button className="bg-orange-400 px-4 py-2 rounded-md">Add to Cart</button>
+                <button className="bg-orange-400 hover:bg-orange-500 px-4 py-2 rounded-md">View Product</button>
             </div>
           </div>
         </CardContent>
