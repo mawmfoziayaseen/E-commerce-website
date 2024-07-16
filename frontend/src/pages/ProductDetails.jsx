@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import formatNumber from 'format-number';
+import { addToCart } from "@/store/features/cart/cartSlice";
 
 function ProductDetails() {
   const [quantity, setQuantity] = useState(1);
@@ -30,6 +31,11 @@ function ProductDetails() {
   const handlerIncrement = () => {
     setQuantity(quantity + 1);
   };
+// add to cart function
+const handlerAddToCart = () => {
+  dispatch(addToCart({ productId,title, price, pictureUrl,quantity }));
+}
+
   // use effect
   useEffect(() => {
     dispatch(getSingleProduct(productId));
@@ -41,6 +47,12 @@ function ProductDetails() {
       setProductDetails(products.product);
     }
   }, [products]);
+  // product details
+  const { title, category, picture, description, price } = productDetails;
+  const pictureUrl= picture?.secure_url ||"";
+  const categoryName = category?.name || "";
+
+
 
   // for waiting we use status and error
   if (status == "loading") {
@@ -66,7 +78,7 @@ function ProductDetails() {
       <div className="flex py-5">
         <div className="w-1/2">
           <img
-            src={productDetails.picture.secure_url}
+            src={pictureUrl}
             alt={productDetails.title}
             className="mx-auto"
             height={300}
@@ -75,11 +87,11 @@ function ProductDetails() {
         </div>
         <div className="w-1/2">
           <h2 className="text-3xl mb-3 font-semibold">
-            {productDetails.title}
+            {title}
           </h2>
           <p className="capitalize mb-3">
             Price:
-            <span className="font-semibold">{formatNumber()(productDetails.price) }</span>
+            <span className="font-semibold">{formatNumber()(price) }</span>
             {""}
             <span className="text-gray-400" style={{ fontSize: "14px" }}>
               PKR/Item
@@ -88,10 +100,10 @@ function ProductDetails() {
           <p className="capitalize mb-3">
             Category
             <span className="font-semibold">
-              {productDetails.category.name}
+              {categoryName}
             </span>
           </p>
-          <p className="capitalize mb-3">{productDetails.description}</p>
+          <p className="capitalize mb-3">{description}</p>
           <div>
             <button
               className="px-2 py-1 bg-gray-300 rounded"
@@ -114,7 +126,7 @@ function ProductDetails() {
             </button>
           </div>
           <div>
-            <button className="w-full bg-orange-400 hover:bg-orange-500 py-2 rounded">
+            <button onClick={handlerAddToCart} className="w-full bg-orange-400 hover:bg-orange-500 py-2 rounded">
               Add to Cart
             </button>
           </div>

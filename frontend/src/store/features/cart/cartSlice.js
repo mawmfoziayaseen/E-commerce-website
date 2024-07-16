@@ -33,9 +33,10 @@ export const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const item = action.payload;
-      const existingItem = state.items.find(
-        (i) => i.productId == item.productId
-      );
+      const existingItem = state.items.find((i) => {
+        return;
+        i.productId == item.productId;
+      });
 
       if (existingItem) {
         existingItem.quantity += item.quantity;
@@ -47,15 +48,15 @@ export const cartSlice = createSlice({
     removeFromCart: (state, action) => {
       const itemId = action.payload;
       state.items = state.items.filter((item) => {
-        item.productId !== itemId;
+        return item.productId != itemId;
       });
       saveStateIntoLocalStroage(state);
     },
     updateQuantity: (state, action) => {
       const { productId, quantity } = action.payload;
-      const existingItem = state.items.find(
-        (item) => item.productId == productId
-      );
+      const existingItem = state.items.find((item) => {
+        return item.productId == productId;
+      });
       if (existingItem) {
         existingItem.quantity = quantity;
       }
