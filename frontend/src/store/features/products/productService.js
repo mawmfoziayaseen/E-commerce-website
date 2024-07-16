@@ -1,4 +1,5 @@
 import axios from "axios";
+// import { getSingleProduct } from "./productSlice";
 
 // Add product
 const createProduct = async (inputValues) => {
