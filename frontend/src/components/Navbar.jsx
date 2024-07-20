@@ -8,39 +8,34 @@ import {
     DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
-    DropdownMenuTrigger
+  DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/store/features/auth/authSlice";
 import { toast } from "react-toastify";
-
 
 function Navbar() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector((state) => state.auth.user?.user);
     const handleLogout = () => {
-
         console.log("logout button clicked");
         //logout logic here
         dispatch(logout())
             .unwrap()
             .then((response) => {
                 if (response?.success === true) {
-
                     toast.success(response?.message, { autoClose: 2000 });
                     setTimeout(() => {
                         navigate("/login");
                     }, 2000);
                 } else {
                     toast.error(response?.message, { autoClose: 2000 });
-
                 }
-
             })
             .catch((error) => {
                 toast.error(error, { autoClose: 2000 });
-            })
+      });
     };
     return (
         <>
@@ -82,7 +77,6 @@ function Navbar() {
                     >
                         Contact
                     </Link>
-
                 </nav>
                 <Sheet>
                     <SheetTrigger asChild>
@@ -108,7 +102,6 @@ function Navbar() {
                                 </p>
 
                                 <span className="sr-only">ShopWave</span>
-
                             </Link>
                             <Link
                                 to="/"
@@ -134,7 +127,6 @@ function Navbar() {
                             >
                                 Contact
                             </Link>
-
                         </nav>
                     </SheetContent>
                 </Sheet>
@@ -152,20 +144,18 @@ function Navbar() {
 
                                     <Link to="/login">Login</Link>
                                 </Button>
-                                <Button >
+              <Button>
                                     <Link to="/register">Register</Link>
                                 </Button>
                             </div>
-                        )
-
-                            :
-                            (
+          ) : (
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
                                         <Button
                                             variant="secondary"
                                             size="icon"
-                                            className="rounded-full">
+                  className="rounded-full"
+                >
                                             <CircleUser className="h-5 w-5" />
                                             <span className="sr-only">Toggle user menu</span>
                                         </Button>
@@ -175,26 +165,22 @@ function Navbar() {
                                         <DropdownMenuSeparator />
 
                                         <DropdownMenuItem>
-                                            {user.role === 1 ? (<Link to="/admin">Dashboard</Link>
-                                            )
-                                                : (
-                                                    <Link to="/profile">Profile</Link>)}
-
-
-
+                  {user.role === 1 ? (
+                    <Link to="/admin">Dashboard</Link>
+                  ) : (
+                    <Link to="/profile">Profile</Link>
+                  )}
                                         </DropdownMenuItem>
                                         <DropdownMenuItem>Support</DropdownMenuItem>
                                         <DropdownMenuSeparator />
                                         <DropdownMenuItem>
                                             <button onClick={handleLogout}>Logout</button>
                                         </DropdownMenuItem>
-
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             )}
                 </div>
             </header>
-
         </>
     );
 }

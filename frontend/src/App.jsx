@@ -18,6 +18,7 @@ import UpdateCategory from "./pages/Admin/UpdateCategory";
 import AddProduct from "./pages/Admin/AddProduct";
 import UpdateProduct from "./pages/Admin/UpdateProduct";
 import ProductDetails from "./pages/ProductDetails";
+import CartPage from "./pages/Admin/CartPage";
 
 function App() {
   const location = useLocation();
@@ -35,6 +36,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/cart" element={<CartPage />} />
         {/* Admin Routes */}
         <Route path="/admin" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
