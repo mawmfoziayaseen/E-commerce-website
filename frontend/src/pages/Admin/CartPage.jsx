@@ -49,8 +49,10 @@ function CartPage() {
                 className="flex items-center justify-between bg-white p-4 shadow rounded-lg"
               >
                 <img
-                className="w-32 h-32 object-contain rounded"
-                 src={item.pictureUrl} alt={item.title} />
+                  className="w-32 h-32 object-contain rounded"
+                  src={item.pictureUrl}
+                  alt={item.title}
+                />
                 <div className="flex-1 px-4">
                   <h2 className="text-x1 font-semibold">{item.title}</h2>
                   <p className="text-gray-600">
@@ -125,7 +127,7 @@ function CartPage() {
 
           <div className="flex items-center justify-between mt-5">
             <h2 className="text-2x1 font-semibold">
-            Total: {" "}
+              Total:{" "}
               <span className="font-semibold">
                 {formatNumber()(totalAmount.toFixed(2))}
               </span>
@@ -133,7 +135,6 @@ function CartPage() {
               <span className="text-gray-400" style={{ fontSize: "14px" }}>
                 PKR
               </span>
-            
             </h2>
             <Link
               className="bg-orange-400 text-black px-4 py-2 rounded hover:bg-orange-500"
