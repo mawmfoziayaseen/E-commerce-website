@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import formatNumber from 'format-number';
 import { addToCart } from "@/store/features/cart/cartSlice";
+import { toast } from "react-toastify";
 
 function ProductDetails() {
   const [quantity, setQuantity] = useState(1);
@@ -24,16 +25,17 @@ function ProductDetails() {
   const error = useSelector((state) => state.products.error);
 
   const handlerDecement = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
+  setQuantity((prevQuantity)=>(prevQuantity > 1? prevQuantity - 1 : 1));
+
     }
-  };
+  
   const handlerIncrement = () => {
-    setQuantity(quantity + 1);
+    setQuantity((prevQuantity)=>prevQuantity + 1 );
   };
 // add to cart function
-const handlerAddToCart = () => {
+const handleAddToCart = () => {
   dispatch(addToCart({ productId,title, price, pictureUrl,quantity }));
+  toast.success("Item added to cart successfully",{autoClose:1500});
 }
 
   // use effect
@@ -57,6 +59,7 @@ const handlerAddToCart = () => {
   // for waiting we use status and error
   if (status == "loading") {
     return (
+      
       <div className="flex justify-center items-center h-full">
         <p>Loading Products....</p>
       </div>
@@ -70,6 +73,8 @@ const handlerAddToCart = () => {
       </div>
     );
   }
+  
+  
   return (
     <>
     <div className="container py-5">
@@ -127,13 +132,14 @@ const handlerAddToCart = () => {
             </button>
           </div>
           <div>
-            <button onClick={handlerAddToCart} className="w-full bg-orange-400 hover:bg-orange-500 py-2 rounded">
+            <button onClick={handleAddToCart} className="w-full bg-orange-400 hover:bg-orange-500 py-2 rounded">
               Add to Cart
             </button>
           </div>
         </div>
       </div>
     </div>
+    </>
   );
 }
 

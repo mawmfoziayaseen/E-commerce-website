@@ -4,7 +4,7 @@ const LoadStateFromLocalStorage = () => {
   try {
     const cartData = window.localStorage.getItem("cart");
     if (cartData === null) {
-      return { items: [] };
+      return { items: [], };
     }
 
     return JSON.parse(cartData); //this line load cart items from local storage if items present there
@@ -21,7 +21,7 @@ const saveStateIntoLocalStroage = (state) => {
     const cartData = JSON.stringify(state);
     window.localStorage.setItem("cart", cartData);
   } catch (error) {
-    console.log("Error while saving cart items", error);
+    console.log("Error while saving cart items to Local storage", error);
   }
 };
 
@@ -34,8 +34,7 @@ export const cartSlice = createSlice({
     addToCart: (state, action) => {
       const item = action.payload;
       const existingItem = state.items.find((i) => {
-        return;
-        i.productId == item.productId;
+        return i.productId == item.productId;
       });
 
       if (existingItem) {
@@ -48,7 +47,7 @@ export const cartSlice = createSlice({
     removeFromCart: (state, action) => {
       const itemId = action.payload;
       state.items = state.items.filter((item) => {
-        return item.productId != itemId;
+        return item.productId !== itemId;
       });
       saveStateIntoLocalStroage(state);
     },
