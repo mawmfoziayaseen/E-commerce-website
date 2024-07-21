@@ -26,7 +26,6 @@ function ProductDetails() {
   const handlerDecement = () => {
     setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
   };
-
   const handlerIncrement = () => {
     setQuantity((prevQuantity) => prevQuantity + 1);
   };
