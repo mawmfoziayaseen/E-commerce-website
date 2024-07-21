@@ -3,14 +3,15 @@ import { getSingleProduct } from "@/store/features/products/productSlice";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import formatNumber from 'format-number';
+import formatNumber from "format-number";
 import { addToCart } from "@/store/features/cart/cartSlice";
+import { toast } from "react-toastify";
 
 function ProductDetails() {
   const [quantity, setQuantity] = useState(1);
 
   // product detail useState making
-  const [productDetails,  setProductDetails] = useState({
+  const [productDetails, setProductDetails] = useState({
     title: "",
     category: "",
     picture: "",
@@ -24,17 +25,16 @@ function ProductDetails() {
   const error = useSelector((state) => state.products.error);
 
   const handlerDecement = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
+    setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
   };
   const handlerIncrement = () => {
-    setQuantity(quantity + 1);
+    setQuantity((prevQuantity) => prevQuantity + 1);
   };
 // add to cart function
-const handlerAddToCart = () => {
-  dispatch(addToCart({ productId,title, price, pictureUrl,quantity }));
-}
+  const handleAddToCart = () => {
+    dispatch(addToCart({ productId, title, price, pictureUrl, quantity }));
+    toast.success("Item added to cart successfully", { autoClose: 1500 });
+  };
 
   // use effect
   useEffect(() => {
@@ -49,10 +49,8 @@ const handlerAddToCart = () => {
   }, [products]);
   // product details
   const { title, category, picture, description, price } = productDetails;
-  const pictureUrl= picture?.secure_url ||"";
+  const pictureUrl = picture?.secure_url || "";
   const categoryName = category?.name || "";
-
-
 
   // for waiting we use status and error
   if (status == "loading") {
@@ -70,7 +68,9 @@ const handlerAddToCart = () => {
       </div>
     );
   }
+
   return (
+    <>
     <div className="container py-5">
       <h1 className="text-center text-5xl py-7 font-semibold">
         Product Details
@@ -86,12 +86,10 @@ const handlerAddToCart = () => {
           />
         </div>
         <div className="w-1/2">
-          <h2 className="text-3xl mb-3 font-semibold">
-            {title}
-          </h2>
+            <h2 className="text-3xl mb-3 font-semibold">{title}</h2>
           <p className="capitalize mb-3">
             Price:
-            <span className="font-semibold">{formatNumber()(price) }</span>
+              <span className="font-semibold">{formatNumber()(price)}</span>
             {""}
             <span className="text-gray-400" style={{ fontSize: "14px" }}>
               PKR/Item
@@ -99,9 +97,7 @@ const handlerAddToCart = () => {
           </p>
           <p className="capitalize mb-3">
             Category
-            <span className="font-semibold">
-              {categoryName}
-            </span>
+              <span className="font-semibold">{categoryName}</span>
           </p>
           <p className="capitalize mb-3">{description}</p>
           <div>
@@ -126,13 +122,17 @@ const handlerAddToCart = () => {
             </button>
           </div>
           <div>
-            <button onClick={handlerAddToCart} className="w-full bg-orange-400 hover:bg-orange-500 py-2 rounded">
+              <button
+                onClick={handleAddToCart}
+                className="w-full bg-orange-400 hover:bg-orange-500 py-2 rounded"
+              >
               Add to Cart
             </button>
           </div>
         </div>
       </div>
     </div>
+    </>
   );
 }
 
